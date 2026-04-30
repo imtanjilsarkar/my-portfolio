@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tanjil Sarkar - Professional Portfolio">
-    <title>Tanjil Sarkar | Portfolio 2026</title>
+    <meta name="description" content="Tanjil Sarkar - Computer Science Student at IUB | Portfolio">
+    <meta name="author" content="Tanjil Sarkar">
+    <meta name="keywords" content="Tanjil Sarkar, IUB, Computer Science, Portfolio, Developer">
+    <title>Tanjil Sarkar | CS Student & Developer</title>
     
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -49,7 +51,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 2rem;
+            padding: 1.2rem 2rem;
             background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
@@ -146,6 +148,13 @@
             animation: fadeInUp 0.8s ease 0.2s backwards;
         }
 
+        .hero .institution {
+            font-size: 1rem;
+            color: #3b82f6;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.3s backwards;
+        }
+
         .cta-buttons {
             display: flex;
             gap: 1rem;
@@ -169,6 +178,7 @@
         .btn-secondary {
             border: 2px solid #3b82f6;
             color: #3b82f6;
+            background: transparent;
         }
 
         .btn-primary:hover, .btn-secondary:hover {
@@ -244,10 +254,15 @@
             color: #3b82f6;
         }
 
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
         /* Skills */
-        .skills-grid {
+        .skills-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
@@ -260,6 +275,7 @@
         .skill-category h3 {
             margin-bottom: 1rem;
             color: #3b82f6;
+            font-size: 1.3rem;
         }
 
         .skill-items {
@@ -300,7 +316,7 @@
         }
 
         .project-image {
-            height: 200px;
+            height: 150px;
             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             display: flex;
             align-items: center;
@@ -314,11 +330,13 @@
 
         .project-info h3 {
             margin-bottom: 0.5rem;
+            font-size: 1.3rem;
         }
 
         .project-info p {
             color: #94a3b8;
             margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
 
         .project-tech {
@@ -333,12 +351,6 @@
             padding: 0.3rem 0.8rem;
             border-radius: 50px;
             font-size: 0.8rem;
-        }
-
-        .project-links a {
-            color: #3b82f6;
-            margin-right: 1rem;
-            text-decoration: none;
         }
 
         /* Experience & Achievements */
@@ -365,6 +377,12 @@
             margin-bottom: 0.5rem;
         }
 
+        .timeline-location {
+            color: #8b5cf6;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
         /* Contact */
         .contact-content {
             display: grid;
@@ -387,6 +405,17 @@
 
         .contact-item i {
             font-size: 1.5rem;
+            color: #3b82f6;
+            width: 30px;
+        }
+
+        .contact-item a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
             color: #3b82f6;
         }
 
@@ -418,6 +447,12 @@
             font-family: 'Inter', sans-serif;
         }
 
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
         .contact-form button {
             width: 100%;
             padding: 1rem;
@@ -428,6 +463,11 @@
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
         }
 
         /* Footer */
@@ -436,6 +476,7 @@
             padding: 2rem;
             background: #050505;
             border-top: 1px solid #1a1a1a;
+            color: #94a3b8;
         }
 
         /* Animations */
@@ -468,6 +509,25 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .container {
+                padding: 0 1rem;
+            }
         }
     </style>
 </head>
@@ -495,10 +555,13 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Hi, I'm <span class="gradient-text">Tanjil Sarkar</span></h1>
-            <p>Developer | Problem Solver | Tech Enthusiast</p>
+            <p>Computer Science Student | Aspiring Software Developer | Problem Solver</p>
+            <div class="institution">
+                <i class="fas fa-university"></i> Independent University, Bangladesh (IUB)
+            </div>
             <div class="cta-buttons">
-                <a href="#contact" class="btn-primary">Hire Me</a>
-                <a href="#projects" class="btn-secondary">View Work</a>
+                <a href="#contact" class="btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn-secondary">View My Work</a>
             </div>
         </div>
     </section>
@@ -509,21 +572,21 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>I'm a passionate developer based in Bangladesh, dedicated to building amazing web experiences. With a strong foundation in modern technologies, I create solutions that make a difference.</p>
-                    <p>Currently pursuing Computer Science while working on exciting projects. I love learning new technologies and solving real-world problems through code.</p>
+                    <p>I am a Computer Science student at Independent University, Bangladesh (IUB) with a strong interest in software development, algorithms, and real-world problem solving. I enjoy building useful digital products that solve everyday student challenges.</p>
+                    <p>Currently, I am focused on improving my skills in C++, Python, databases, and modern web development. I believe in continuous learning and love taking on challenges that push my boundaries.</p>
                 </div>
                 <div class="about-stats">
                     <div class="stat-card">
-                        <div class="stat-number">20+</div>
-                        <div>Projects</div>
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Years Tutoring</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">2+</div>
-                        <div>Years Exp</div>
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Projects</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">10+</div>
-                        <div>Clients</div>
+                        <div class="stat-number">IUB</div>
+                        <div class="stat-label">CS Student</div>
                     </div>
                 </div>
             </div>
@@ -533,34 +596,49 @@
     <!-- Skills Section -->
     <section id="skills" class="section">
         <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <div class="skills-container">
                 <div class="skill-category">
-                    <h3>Frontend</h3>
+                    <h3><i class="fas fa-code"></i> Programming Languages</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">C</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-globe"></i> Web Development</h3>
                     <div class="skill-items">
                         <span class="skill-tag">HTML5</span>
                         <span class="skill-tag">CSS3</span>
                         <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Tailwind</span>
+                        <span class="skill-tag">React (Learning)</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3>Backend</h3>
+                    <h3><i class="fas fa-database"></i> Database</h3>
                     <div class="skill-items">
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Express</span>
-                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">SQL</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3>Tools</h3>
+                    <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
                     <div class="skill-items">
                         <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
                         <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">Figma</span>
-                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Notion</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> Core Concepts</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Data Structures</span>
+                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">OOP</span>
+                        <span class="skill-tag">DBMS</span>
                     </div>
                 </div>
             </div>
@@ -574,23 +652,47 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-calculator"></i>
                     </div>
                     <div class="project-info">
-                        <h3>Project Name 1</h3>
-                        <p>Description of your amazing project goes here...</p>
+                        <h3>IUB CGPA Calculator</h3>
+                        <p>A web-based GPA and CGPA calculator designed for Independent University, Bangladesh students to quickly estimate semester and cumulative results.</p>
                         <div class="project-tech">
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>MongoDB</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#"><i class="fab fa-github"></i> Code</a>
-                            <a href="#"><i class="fas fa-external-link-alt"></i> Demo</a>
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
                         </div>
                     </div>
                 </div>
-                <!-- Add more project cards similarly -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Student Management System</h3>
+                        <p>A database-based project for managing student records, course details, grades, and academic information efficiently.</p>
+                        <div class="project-tech">
+                            <span>MySQL</span>
+                            <span>SQL</span>
+                            <span>PHP</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>CanSat Environmental Data Project</h3>
+                        <p>Worked in a team project to develop a CanSat system capable of collecting environmental data using sensors and communication modules.</p>
+                        <div class="project-tech">
+                            <span>Arduino</span>
+                            <span>Sensors</span>
+                            <span>LoRa</span>
+                            <span>Embedded Systems</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -601,14 +703,16 @@
             <h2 class="section-title">Experience</h2>
             <div class="timeline">
                 <div class="timeline-item">
-                    <h3>Web Developer Intern</h3>
-                    <div class="timeline-date">2024 - Present</div>
-                    <p>Working on real-world projects, collaborating with team members, and implementing modern web solutions.</p>
+                    <h3>📚 Private Tutor</h3>
+                    <div class="timeline-date">2022 - Present | 3+ Years Experience</div>
+                    <div class="timeline-location">Dhaka, Bangladesh</div>
+                    <p>Provided academic tutoring for university students in CSE101, Physics, Mathematics, DBMS, and other foundational courses. Helped students improve understanding and exam performance with personalized guidance.</p>
                 </div>
                 <div class="timeline-item">
-                    <h3>Freelance Developer</h3>
-                    <div class="timeline-date">2023 - Present</div>
-                    <p>Built websites and web applications for clients worldwide.</p>
+                    <h3>🛰️ Team Member | CanSat Project</h3>
+                    <div class="timeline-date">University Project</div>
+                    <div class="timeline-location">Independent University, Bangladesh</div>
+                    <p>Collaborated with teammates on hardware setup, environmental sensing, and project planning. Gained hands-on experience with embedded systems and team collaboration.</p>
                 </div>
             </div>
         </div>
@@ -620,12 +724,20 @@
             <h2 class="section-title">Achievements</h2>
             <div class="achievements-grid">
                 <div class="achievement-card">
-                    <h3>🏆 GitHub Education Certified</h3>
-                    <p>Recognized as a student developer with free domain and tools.</p>
+                    <h3>🎓 Millennium Fellowship Participant</h3>
+                    <p>Selected as a participant in the prestigious Millennium Fellowship program, joining global student leaders working on social impact projects.</p>
                 </div>
                 <div class="achievement-card">
-                    <h3>📱 Completed 20+ Projects</h3>
-                    <p>Successfully delivered multiple web applications.</p>
+                    <h3>🌐 Personal Portfolio Launch</h3>
+                    <p>Successfully launched a professional personal portfolio website with a custom domain (tanjilsarkar.me) using GitHub Pages.</p>
+                </div>
+                <div class="achievement-card">
+                    <h3>📖 3+ Years Tutoring Experience</h3>
+                    <p>Consistently helped students achieve better grades and deeper understanding in computer science and mathematics courses.</p>
+                </div>
+                <div class="achievement-card">
+                    <h3>🎯 GitHub Education Benefits</h3>
+                    <p>Leveraged GitHub Education benefits including free domain and developer tools for building and deploying projects.</p>
                 </div>
             </div>
         </div>
@@ -639,26 +751,34 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <div>tanjil@example.com</div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>+880 1234 567890</div>
+                        <div>im.tanjilsarkar@gmail.com</div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <div>Bangladesh</div>
+                        <div>Dhaka, Bangladesh</div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <a href="https://github.com/imtanjilsarkar" target="_blank">github.com/imtanjilsarkar</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <a href="https://linkedin.com/in/tanjilsarkar" target="_blank">linkedin.com/in/tanjilsarkar</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-facebook"></i>
+                        <a href="https://facebook.com/tanjilsarkar123" target="_blank">facebook.com/tanjilsarkar123</a>
                     </div>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/imtanjilsarkar" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/tanjilsarkar" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://facebook.com/tanjilsarkar123" target="_blank"><i class="fab fa-facebook"></i></a>
                     </div>
                 </div>
                 <form class="contact-form" id="contactForm">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea rows="5" placeholder="Your Message" required></textarea>
+                    <input type="text" id="name" placeholder="Your Name" required>
+                    <input type="email" id="email" placeholder="Your Email" required>
+                    <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
                     <button type="submit">Send Message</button>
                 </form>
             </div>
@@ -666,13 +786,15 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 Tanjil Sarkar. All rights reserved.</p>
+        <p>&copy; 2026 Tanjil Sarkar. All rights reserved. | Built with <i class="fas fa-heart" style="color: #3b82f6;"></i> in Dhaka, Bangladesh</p>
     </footer>
 
     <script>
-        // Mobile menu
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenu.addEventListener('click', () => {
             if (navLinks.style.display === 'flex') {
                 navLinks.style.display = 'none';
             } else {
@@ -685,17 +807,28 @@
                 navLinks.style.background = '#0a0a0a';
                 navLinks.style.padding = '2rem';
                 navLinks.style.gap = '1rem';
+                navLinks.style.borderBottom = '1px solid #3b82f6';
             }
         });
 
-        // Contact form
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.style.display = 'none';
+                }
+            });
+        });
+
+        // Contact form handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thanks for reaching out! I\'ll respond within 24 hours.');
+            const name = document.getElementById('name').value;
+            alert(`Thank you ${name}! I'll get back to you within 24-48 hours.`);
             this.reset();
         });
 
-        // Smooth scroll for nav links
+        // Smooth scroll for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -704,6 +837,16 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
         });
     </script>
 </body>
