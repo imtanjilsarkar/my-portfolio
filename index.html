@@ -97,13 +97,12 @@
             cursor: pointer;
         }
 
-        /* Hero Section */
+        /* Hero Section with Image */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
             position: relative;
             overflow: hidden;
@@ -126,10 +125,67 @@
         .hero-content {
             position: relative;
             z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .hero h1 {
-            font-size: 4rem;
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Image Frame */
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-frame {
+            width: 100%;
+            max-width: 380px;
+            position: relative;
+        }
+
+        .image-frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: 30px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        #profile-pic {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+            aspect-ratio: 1 / 1;
+        }
+
+        #profile-pic:hover {
+            transform: scale(1.02);
+        }
+
+        /* Hero Text */
+        .hero-text h1 {
+            font-size: 3.5rem;
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease;
         }
@@ -141,24 +197,40 @@
             color: transparent;
         }
 
-        .hero p {
+        .hero-text p {
             font-size: 1.2rem;
             color: #94a3b8;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease 0.2s backwards;
         }
 
-        .hero .institution {
+        .institution {
             font-size: 1rem;
             color: #3b82f6;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease 0.3s backwards;
+        }
+
+        .hero-bio {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            border-left: 3px solid #3b82f6;
+            margin-bottom: 2rem;
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease 0.35s backwards;
+        }
+
+        .hero-bio i {
+            color: #3b82f6;
+            margin-right: 10px;
         }
 
         .cta-buttons {
             display: flex;
             gap: 1rem;
-            justify-content: center;
             animation: fadeInUp 0.8s ease 0.4s backwards;
         }
 
@@ -492,15 +564,45 @@
         }
 
         /* Responsive */
+        @media (max-width: 968px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .hero-image {
+                order: 1;
+            }
+            
+            .hero-text {
+                order: 2;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+            
+            .hero-bio {
+                text-align: left;
+            }
+            
+            .image-frame {
+                max-width: 280px;
+                margin: 0 auto;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
             .mobile-menu {
                 display: block;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
             }
             .about-content,
             .contact-content {
@@ -518,7 +620,7 @@
         }
 
         @media (max-width: 480px) {
-            .hero h1 {
+            .hero-text h1 {
                 font-size: 1.8rem;
             }
             .cta-buttons {
@@ -551,17 +653,29 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Profile Picture -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>Hi, I'm <span class="gradient-text">Tanjil Sarkar</span></h1>
-            <p>Computer Science Student | Aspiring Software Developer | Problem Solver</p>
-            <div class="institution">
-                <i class="fas fa-university"></i> Independent University, Bangladesh (IUB)
-            </div>
-            <div class="cta-buttons">
-                <a href="#contact" class="btn-primary">Get In Touch</a>
-                <a href="#projects" class="btn-secondary">View My Work</a>
+            <div class="hero-grid">
+                <div class="hero-image">
+                    <div class="image-frame">
+                        <img src="images/profile.png" alt="Tanjil Sarkar" id="profile-pic">
+                    </div>
+                </div>
+                <div class="hero-text">
+                    <h1>Hi, I'm <span class="gradient-text">Tanjil Sarkar</span></h1>
+                    <p>Computer Science Student | Aspiring Software Developer | Problem Solver</p>
+                    <div class="institution">
+                        <i class="fas fa-university"></i> Independent University, Bangladesh (IUB)
+                    </div>
+                    <div class="hero-bio">
+                        <i class="fas fa-quote-left"></i> Building useful digital products that solve everyday student challenges. Passionate about algorithms, databases, and creating impact through code.
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="btn-primary">Get In Touch</a>
+                        <a href="#projects" class="btn-secondary">View My Work</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -703,13 +817,13 @@
             <h2 class="section-title">Experience</h2>
             <div class="timeline">
                 <div class="timeline-item">
-                    <h3>📚 Private Tutor</h3>
+                    <h3>Private Tutor</h3>
                     <div class="timeline-date">2022 - Present | 3+ Years Experience</div>
                     <div class="timeline-location">Dhaka, Bangladesh</div>
                     <p>Provided academic tutoring for university students in CSE101, Physics, Mathematics, DBMS, and other foundational courses. Helped students improve understanding and exam performance with personalized guidance.</p>
                 </div>
                 <div class="timeline-item">
-                    <h3>🛰️ Team Member | CanSat Project</h3>
+                    <h3>Team Member | CanSat Project</h3>
                     <div class="timeline-date">University Project</div>
                     <div class="timeline-location">Independent University, Bangladesh</div>
                     <p>Collaborated with teammates on hardware setup, environmental sensing, and project planning. Gained hands-on experience with embedded systems and team collaboration.</p>
@@ -724,20 +838,16 @@
             <h2 class="section-title">Achievements</h2>
             <div class="achievements-grid">
                 <div class="achievement-card">
-                    <h3>🎓 Millennium Fellowship Participant</h3>
+                    <h3> Millennium Fellowship Participant</h3>
                     <p>Selected as a participant in the prestigious Millennium Fellowship program, joining global student leaders working on social impact projects.</p>
                 </div>
                 <div class="achievement-card">
-                    <h3>🌐 Personal Portfolio Launch</h3>
+                    <h3>Personal Portfolio Launch</h3>
                     <p>Successfully launched a professional personal portfolio website with a custom domain (tanjilsarkar.me) using GitHub Pages.</p>
                 </div>
                 <div class="achievement-card">
-                    <h3>📖 3+ Years Tutoring Experience</h3>
+                    <h3>3+ Years Tutoring Experience</h3>
                     <p>Consistently helped students achieve better grades and deeper understanding in computer science and mathematics courses.</p>
-                </div>
-                <div class="achievement-card">
-                    <h3>🎯 GitHub Education Benefits</h3>
-                    <p>Leveraged GitHub Education benefits including free domain and developer tools for building and deploying projects.</p>
                 </div>
             </div>
         </div>
