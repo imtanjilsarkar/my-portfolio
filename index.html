@@ -58,7 +58,7 @@
             scroll-behavior: smooth;
         }
 
-        /* ========== PILL-SHAPED NAVIGATION BAR - GLASSMORPHISM ========== */
+        /* Navigation */
         .navbar {
             position: fixed;
             top: 20px;
@@ -88,7 +88,6 @@
             gap: 2rem;
         }
 
-        /* FIXED LOGO - VISIBLE NOW */
         .logo img {
             height: 40px;
             width: auto;
@@ -137,6 +136,15 @@
             transform: translateY(-2px);
         }
 
+        /* ONLY PIVOLVE Navigation Link - Purple Color */
+        .pivolve-nav-link {
+            color: #8b5cf6 !important;
+        }
+
+        .pivolve-nav-link:hover {
+            color: #a78bfa !important;
+        }
+
         .mobile-menu {
             display: none;
             font-size: 1.5rem;
@@ -144,7 +152,7 @@
             color: #e8e8e8;
         }
 
-        /* Hero Section - Premium */
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -285,7 +293,7 @@
             50% { opacity: 0.4; transform: scale(0.8); }
         }
 
-        /* Sections - Glassmorphism */
+        /* Sections */
         .section {
             padding: 6rem 5%;
         }
@@ -369,7 +377,7 @@
             box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
         }
 
-        /* Stats - Glass Cards */
+        /* Stats */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -499,7 +507,7 @@
             margin: 0.5rem 0;
         }
 
-        /* Projects */
+        /* Projects - ALL CARDS SAME THEME */
         .projects-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -525,6 +533,9 @@
             border: 1px solid rgba(99, 102, 241, 0.15);
             border-radius: 20px;
             transition: all 0.5s ease;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
         }
 
         .project-card:hover {
@@ -536,6 +547,17 @@
         .project-icon {
             font-size: 2rem;
             color: #6366f1;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #e8e8e8;
+        }
+
+        .project-card p {
+            color: #a0a0b0;
             margin-bottom: 1rem;
         }
 
@@ -551,6 +573,21 @@
             padding: 0.2rem 0.8rem;
             background: rgba(99, 102, 241, 0.15);
             border-radius: 50px;
+            color: #a0a0b0;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: #8b5cf6;
+            transform: translateX(5px);
         }
 
         /* Achievements */
@@ -695,7 +732,7 @@
             box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
 
-        /* Footer - Premium Dark */
+        /* Footer */
         .footer {
             background: #050508;
             padding: 80px 5% 40px;
@@ -763,9 +800,12 @@
             display: inline-block;
         }
 
-        .social-username {
-            color: #6366f1;
-            font-size: 0.7rem;
+        .footer-pivolve-link {
+            color: #8b5cf6 !important;
+        }
+
+        .footer-pivolve-link:hover {
+            color: #a78bfa !important;
         }
 
         .footer-bottom {
@@ -841,7 +881,7 @@
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <!-- Navigation - Glassmorphism Pill (FIXED LOGO) -->
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
@@ -855,6 +895,7 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#achievements">Achievements</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="pivolve.html" class="pivolve-nav-link">PIVOLVE</a></li>
             </ul>
             <div class="mobile-menu">
                 <i class="fas fa-bars"></i>
@@ -866,7 +907,7 @@
     <section id="home" class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
-            <div class="hero-badge">✦ DIGITAL CRAFTSMAN ✦</div>
+            <div class="hero-badge">DIGITAL CRAFTSMAN</div>
             <h1>Designing <span class="gradient-text">timeless</span><br>identities.</h1>
             <div class="hero-subtitle">Computer Science and Engineering student at IUB, crafting solutions that matter.</div>
             <div class="hero-cta">
@@ -883,7 +924,7 @@
     <!-- About Section -->
     <section id="about" class="section">
         <div class="section-container">
-            <div class="section-tag" data-aos="fade-up">✦ ABOUT</div>
+            <div class="section-tag" data-aos="fade-up">ABOUT</div>
             <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Hi, I'm Tanjil Sarkar</h2>
             <div class="about-grid">
                 <div class="about-text" data-aos="fade-right" data-aos-duration="800">
@@ -898,7 +939,7 @@
             <div class="stats-grid">
                 <div class="stat-card" data-aos="zoom-in" data-aos-delay="100"><div class="stat-number">3+</div><div>Years Experience</div></div>
                 <div class="stat-card" data-aos="zoom-in" data-aos-delay="200"><div class="stat-number">10+</div><div>Projects</div></div>
-                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300"><div class="stat-number">50+</div><div>Students</div></div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300"><div class="stat-number">100+</div><div>Students</div></div>
             </div>
         </div>
     </section>
@@ -906,7 +947,7 @@
     <!-- Skills Section -->
     <section id="skills" class="section">
         <div class="section-container">
-            <div class="section-tag" data-aos="fade-up">✦ EXPERTISE</div>
+            <div class="section-tag" data-aos="fade-up">EXPERTISE</div>
             <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Skills & Technologies</h2>
             <div class="skills-grid">
                 <div class="skill-card" data-aos="flip-left" data-aos-delay="100"><h3>Programming</h3><div class="skill-items"><span class="skill-tag">C</span><span class="skill-tag">C++</span><span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span></div></div>
@@ -920,24 +961,63 @@
     <!-- Experience Section -->
     <section id="experience" class="section">
         <div class="section-container">
-            <div class="section-tag" data-aos="fade-up">✦ TIMELINE</div>
+            <div class="section-tag" data-aos="fade-up">TIMELINE</div>
             <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Experience</h2>
             <div class="timeline">
-                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800"><div class="timeline-year">2022 — Present</div><div class="timeline-title">Private Tutor</div><div>Teaching university students CSE101, Physics, Mathematics, and DBMS. Helped 50+ students improve their grades.</div></div>
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="800"><div class="timeline-year">2022 — Present</div><div class="timeline-title">Private Tutor</div><div>Teaching university students CSE101, Physics, Mathematics, and DBMS. Helped 100+ students improve their grades.</div></div>
                 <div class="timeline-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="100"><div class="timeline-year">University Project</div><div class="timeline-title">Team Member — CanSat Project</div><div>Collaborated on hardware setup, environmental sensing, and project planning for a CanSat system.</div></div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Projects Section - ALL CARDS SAME THEME -->
     <section id="projects" class="section">
         <div class="section-container">
-            <div class="section-tag" data-aos="fade-up">✦ WORK</div>
+            <div class="section-tag" data-aos="fade-up">WORK</div>
             <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Featured Projects</h2>
             <div class="projects-grid">
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="100"><div class="project-icon"><i class="fas fa-calculator"></i></div><h3>IUB CGPA Calculator</h3><p>Web-based GPA and CGPA calculator for IUB students.</p><div class="project-tech"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div></div>
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="200"><div class="project-icon"><i class="fas fa-database"></i></div><h3>Student Management System</h3><p>Database system for managing student records.</p><div class="project-tech"><span>MySQL</span><span>SQL</span><span>PHP</span></div></div>
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="300"><div class="project-icon"><i class="fas fa-microchip"></i></div><h3>CanSat Environmental Project</h3><p>Team project collecting environmental data using sensors.</p><div class="project-tech"><span>Arduino</span><span>Sensors</span><span>LoRa</span></div></div>
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="project-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>IUB CGPA Calculator</h3>
+                    <p>Web-based GPA and CGPA calculator for IUB students to estimate semester results quickly.</p>
+                    <div class="project-tech">
+                        <span>HTML5</span>
+                        <span>CSS3</span>
+                        <span>JavaScript</span>
+                    </div>
+                </div>
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="project-icon"><i class="fas fa-database"></i></div>
+                    <h3>Student Management System</h3>
+                    <p>Database system for managing student records, courses, grades, and academic information.</p>
+                    <div class="project-tech">
+                        <span>MySQL</span>
+                        <span>SQL</span>
+                        <span>PHP</span>
+                    </div>
+                </div>
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="300">
+                    <div class="project-icon"><i class="fas fa-microchip"></i></div>
+                    <h3>CanSat Environmental Project</h3>
+                    <p>Team project developing a CanSat system for collecting environmental data using sensors.</p>
+                    <div class="project-tech">
+                        <span>Arduino</span>
+                        <span>Sensors</span>
+                        <span>LoRa</span>
+                    </div>
+                </div>
+                <!-- PIVOLVE Project Card - SAME STYLE AS OTHERS, just links to pivolve page -->
+                <a href="pivolve.html" class="project-card" data-aos="zoom-in-up" data-aos-delay="400">
+                    <div class="project-icon"><i class="fas fa-robot"></i></div>
+                    <h3>PIVOLVE AI</h3>
+                    <p>My dream AI company building the future of artificial intelligence from Bangladesh. Explore the vision.</p>
+                    <div class="project-tech">
+                        <span>AI</span>
+                        <span>Machine Learning</span>
+                        <span>Future Tech</span>
+                    </div>
+                    <span class="project-link">Learn More →</span>
+                </a>
             </div>
         </div>
     </section>
@@ -945,12 +1025,12 @@
     <!-- Achievements Section -->
     <section id="achievements" class="section">
         <div class="section-container">
-            <div class="section-tag" data-aos="fade-up">✦ RECOGNITION</div>
+            <div class="section-tag" data-aos="fade-up">RECOGNITION</div>
             <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Achievements</h2>
             <div class="achievements-grid">
-                <div class="achievement-card" data-aos="flip-up" data-aos-delay="100"><div class="achievement-icon">🎓</div><h3>Millennium Fellowship</h3><p>Selected for prestigious global student leadership program.</p></div>
-                <div class="achievement-card" data-aos="flip-up" data-aos-delay="200"><div class="achievement-icon">🌐</div><h3>Portfolio Launch</h3><p>Professional portfolio with custom domain.</p></div>
-                <div class="achievement-card" data-aos="flip-up" data-aos-delay="300"><div class="achievement-icon">📖</div><h3>3+ Years Tutoring</h3><p>Helped 100+ students achieve better grades.</p></div>
+                <div class="achievement-card" data-aos="flip-up" data-aos-delay="100"><div class="achievement-icon">🏆</div><h3>Millennium Fellowship</h3><p>Selected for prestigious global student leadership program.</p></div>
+                <div class="achievement-card" data-aos="flip-up" data-aos-delay="200"><div class="achievement-icon">🌐</div><h3>Portfolio Launch</h3><p>Professional portfolio with custom domain tanjilsarkar.me.</p></div>
+                <div class="achievement-card" data-aos="flip-up" data-aos-delay="300"><div class="achievement-icon">📚</div><h3>100+ Students Taught</h3><p>Helped 100+ students achieve better grades in CSE courses.</p></div>
             </div>
         </div>
     </section>
@@ -958,14 +1038,14 @@
     <!-- Contact Section -->
     <section id="contact" class="section">
         <div class="section-container">
-            <div class="section-tag" data-aos="fade-up">✦ CONNECT</div>
+            <div class="section-tag" data-aos="fade-up">CONNECT</div>
             <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Get In Touch</h2>
             <div class="contact-grid">
                 <div class="contact-info" data-aos="fade-right" data-aos-duration="800">
                     <div class="contact-item"><i class="fas fa-envelope"></i><span>im.tanjilsarkar@gmail.com</span></div>
                     <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Dhaka, Bangladesh</span></div>
-                    <div class="contact-item"><i class="fab fa-github"></i><a href="https://github.com/imtanjilsarkar">GitGub</a></div>
-                    <div class="contact-item"><i class="fab fa-linkedin"></i><a href="https://linkedin.com/in/tanjilsarkar">LinkedIn </a></div>
+                    <div class="contact-item"><i class="fab fa-github"></i><a href="https://github.com/imtanjilsarkar">GitHub</a></div>
+                    <div class="contact-item"><i class="fab fa-linkedin"></i><a href="https://linkedin.com/in/tanjilsarkar">LinkedIn</a></div>
                     <div class="social-links">
                         <a href="https://github.com/imtanjilsarkar"><i class="fab fa-github"></i></a>
                         <a href="https://linkedin.com/in/tanjilsarkar"><i class="fab fa-linkedin"></i></a>
@@ -988,7 +1068,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <div class="footer-logo"><img src="images/Tanjil.png" alt="Tanjil Sarkar"></div>
-                    <div class="footer-description">Computer Science student at IUB, crafting digital solutions that make a difference.</div>
+                    <div class="footer-description">Computer Science and Engineering student at IUB, crafting digital solutions that make a difference.</div>
                 </div>
                 <div class="footer-col">
                     <h3 class="footer-title">SITE LINKS</h3>
@@ -999,12 +1079,13 @@
                         <li><a href="#experience">EXPERIENCE</a></li>
                         <li><a href="#projects">PROJECTS</a></li>
                         <li><a href="#achievements">ACHIEVEMENTS</a></li>
+                        <li><a href="pivolve.html" class="footer-pivolve-link">PIVOLVE AI</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3 class="footer-title">SOCIAL</h3>
                     <ul class="footer-links">
-                        <li><a href="https://instagram.com/tanjilsarkar_">INSTAGRAM </a></li>
+                        <li><a href="https://instagram.com/tanjilsarkar_">INSTAGRAM</a></li>
                         <li><a href="https://linkedin.com/in/tanjilsarkar">LINKEDIN</a></li>
                         <li><a href="https://github.com/imtanjilsarkar">GITHUB</a></li>
                         <li><a href="https://facebook.com/tanjilsarkar123">FACEBOOK</a></li>
@@ -1014,7 +1095,7 @@
             </div>
             <div class="footer-bottom">
                 <div class="copyright">© 2026 Tanjil Sarkar. All rights reserved.</div>
-                <div class="footer-credit">Designed with <i class="fas fa-heart" style="color: #6366f1;"></i> in Dhaka</div>
+                <div class="footer-credit">Designed with care in Dhaka</div>
             </div>
         </div>
     </footer>
@@ -1065,7 +1146,7 @@
         // Contact form
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you! I\'ll respond within 24 hours.');
+            alert('Thank you! I will respond within 24 hours.');
             this.reset();
         });
 

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Pivolve - Future of AI. Building intelligent solutions that evolve with humanity. Coming 2026.">
+    <meta name="author" content="Tanjil Sarkar">
+    <title>Pivolve | Future of AI</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a0a0a, #020202);
+            color: #e8e8e8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: #6366f1;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            box-shadow: 0 0 20px #6366f1;
+        }
+
+        .cursor-follower {
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(99, 102, 241, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.2s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation - Same as Portfolio */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: auto;
+            max-width: 90%;
+            background: rgba(20, 20, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            top: 10px;
+            background: rgba(15, 15, 25, 0.9);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 8px #6366f1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e8e8e8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #6366f1;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #e8e8e8;
+        }
+
+        /* Hero Section - 2050 Style */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(99, 102, 241, 0.15), transparent 60%);
+        }
+
+        /* Animated Particles */
+        .particle {
+            position: absolute;
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 0 5%;
+            z-index: 2;
+            position: relative;
+        }
+
+        .pivolve-logo {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .pivolve-logo {
+                font-size: 6rem;
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #6366f1;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: #a0a0b0;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            border: 1px solid #6366f1;
+            color: #6366f1;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 5%;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: #6366f1;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff, #a0a0b0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Mission Grid */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .mission-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .mission-card {
+            padding: 2rem;
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            border-color: #6366f1;
+        }
+
+        .mission-icon {
+            font-size: 2.5rem;
+            color: #6366f1;
+            margin-bottom: 1rem;
+        }
+
+        /* AI Ideas Grid */
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .ideas-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .ideas-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .idea-card {
+            padding: 1.8rem;
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .idea-card:hover {
+            transform: translateY(-8px);
+            border-color: #6366f1;
+        }
+
+        .idea-icon {
+            font-size: 2rem;
+            color: #6366f1;
+            margin-bottom: 1rem;
+        }
+
+        .idea-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .idea-card p {
+            color: #a0a0b0;
+            font-size: 0.9rem;
+        }
+
+        .idea-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: #6366f1;
+            background: rgba(99, 102, 241, 0.15);
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+        }
+
+        /* Products */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .product-card {
+            padding: 2rem;
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #6366f1;
+        }
+
+        .product-icon {
+            font-size: 2rem;
+            color: #6366f1;
+            margin-bottom: 1rem;
+        }
+
+        /* Timeline Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .roadmap-item {
+            padding: 1.5rem;
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border-left: 3px solid #6366f1;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .roadmap-item:hover {
+            transform: translateX(15px);
+        }
+
+        .roadmap-year {
+            font-size: 0.8rem;
+            color: #6366f1;
+            letter-spacing: 1px;
+        }
+
+        .roadmap-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        /* Coming Soon Banner */
+        .coming-soon {
+            text-align: center;
+            padding: 4rem;
+            background: rgba(99, 102, 241, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            margin-top: 2rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .waitlist-form input {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 280px;
+            font-family: inherit;
+        }
+
+        .waitlist-form input:focus {
+            outline: none;
+            border: 1px solid #6366f1;
+        }
+
+        /* Footer */
+        .footer {
+            background: #050508;
+            padding: 60px 5% 30px;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: #666680;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #6366f1;
+        }
+
+        .copyright {
+            color: #444450;
+            font-size: 0.7rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .navbar {
+                width: 95%;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                background: rgba(15, 15, 25, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1.5rem;
+                border-radius: 20px;
+                gap: 1rem;
+                text-align: center;
+                border: 1px solid rgba(99, 102, 241, 0.2);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/Tanjil.png" alt="Tanjil Sarkar">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#ideas">AI Ideas</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="index.html">Portfolio</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <div class="hero-badge">✦ THE FUTURE OF AI ✦</div>
+            <div class="pivolve-logo">PIVOLVE</div>
+            <h1>Where Intelligence <span class="gradient-text">Evolves</span></h1>
+            <div class="hero-subtitle">Building the next generation of artificial intelligence — from Bangladesh to the world.</div>
+            <div class="hero-cta">
+                <a href="#ideas" class="btn btn-outline">Explore Ideas →</a>
+                <a href="#waitlist" class="btn btn-primary">Join Waitlist</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="section">
+        <div class="section-container">
+            <div class="section-tag" data-aos="fade-up">✦ OUR PURPOSE</div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Why Pivolve Exists</h2>
+            <div class="mission-grid">
+                <div class="mission-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="mission-icon"><i class="fas fa-brain"></i></div>
+                    <h3>Democratize AI</h3>
+                    <p>Make cutting-edge AI accessible to students, developers, and businesses in Bangladesh and beyond.</p>
+                </div>
+                <div class="mission-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="mission-icon"><i class="fas fa-language"></i></div>
+                    <h3>Local Language First</h3>
+                    <p>Build AI that understands Bangla — breaking language barriers for 300+ million speakers.</p>
+                </div>
+                <div class="mission-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="mission-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Global Impact</h3>
+                    <p>Create solutions that solve real problems — from education to healthcare to sustainability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Ideas Section -->
+    <section id="ideas" class="section">
+        <div class="section-container">
+            <div class="section-tag" data-aos="fade-up">✦ INNOVATION LAB</div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">AI Ideas That Will Shape Tomorrow</h2>
+            <div class="ideas-grid">
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="idea-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>AI Tutor for Every Student</h3>
+                    <p>Personalized AI tutor that adapts to each student's learning style — available 24/7 in Bangla.</p>
+                    <span class="idea-tag">Education</span>
+                </div>
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="idea-icon"><i class="fas fa-microphone-alt"></i></div>
+                    <h3>Bangla Voice Assistant</h3>
+                    <p>Voice-powered AI assistant fluent in Bangla dialects — helping farmers, students, and businesses.</p>
+                    <span class="idea-tag">NLP</span>
+                </div>
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="idea-icon"><i class="fas fa-heartbeat"></i></div>
+                    <h3>AI Health Companion</h3>
+                    <p>Affordable healthcare AI for rural Bangladesh — symptom checker and health guidance.</p>
+                    <span class="idea-tag">Healthcare</span>
+                </div>
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="400">
+                    <div class="idea-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>AgriAI for Farmers</h3>
+                    <p>Crop disease detection and weather prediction using computer vision and local data.</p>
+                    <span class="idea-tag">Agriculture</span>
+                </div>
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="500">
+                    <div class="idea-icon"><i class="fas fa-code"></i></div>
+                    <h3>AI Code Assistant (Bangla)</h3>
+                    <p>Learn programming in your native language — AI that teaches coding in Bangla.</p>
+                    <span class="idea-tag">EdTech</span>
+                </div>
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="600">
+                    <div class="idea-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Mental Health Chatbot</h3>
+                    <p>Anonymous, free mental health support AI for students and young professionals.</p>
+                    <span class="idea-tag">Wellness</span>
+                </div>
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="700">
+                    <div class="idea-icon"><i class="fas fa-university"></i></div>
+                    <h3>University Admission AI</h3>
+                    <p>Smart assistant for university applications — predict admission chances, prepare for interviews.</p>
+                    <span class="idea-tag">Education</span>
+                </div>
+                <div class="idea-card" data-aos="flip-left" data-aos-delay="800">
+                    <div class="idea-icon"><i class="fas fa-chart-simple"></i></div>
+                    <h3>Business Intelligence AI</h3>
+                    <p>AI-powered analytics for small businesses in Bangladesh — affordable and easy to use.</p>
+                    <span class="idea-tag">Business</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section">
+        <div class="section-container">
+            <div class="section-tag" data-aos="fade-up">✦ COMING SOON</div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">First Products</h2>
+            <div class="products-grid">
+                <div class="product-card" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="product-icon"><i class="fas fa-comment-dots"></i></div>
+                    <h3>Pivolve Chat</h3>
+                    <p>First Bangla-English bilingual AI chat assistant. Free for students.</p>
+                </div>
+                <div class="product-card" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="product-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>Pivolve Docs</h3>
+                    <p>AI-powered document analyzer — summarize, translate, and extract insights.</p>
+                </div>
+                <div class="product-card" data-aos="zoom-in-up" data-aos-delay="300">
+                    <div class="product-icon"><i class="fas fa-camera"></i></div>
+                    <h3>Pivolve Vision</h3>
+                    <p>Computer vision API for Bangla text recognition and scene understanding.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="section">
+        <div class="section-container">
+            <div class="section-tag" data-aos="fade-up">✦ ROADMAP</div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Our Journey</h2>
+            <div class="roadmap">
+                <div class="roadmap-item" data-aos="fade-right" data-aos-duration="800">
+                    <div class="roadmap-year">2026 — Q3</div>
+                    <div class="roadmap-title">Research & Development</div>
+                    <div>Building foundational models for Bangla language understanding. Training on local datasets.</div>
+                </div>
+                <div class="roadmap-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="100">
+                    <div class="roadmap-year">2026 — Q4</div>
+                    <div class="roadmap-title">Alpha Launch: Pivolve Chat</div>
+                    <div>First public beta release for students and developers in Bangladesh.</div>
+                </div>
+                <div class="roadmap-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="200">
+                    <div class="roadmap-year">2027 — Q1</div>
+                    <div class="roadmap-title">API Platform Launch</div>
+                    <div>Open AI APIs for developers to build on top of Pivolve infrastructure.</div>
+                </div>
+                <div class="roadmap-item" data-aos="fade-right" data-aos-duration="800" data-aos-delay="300">
+                    <div class="roadmap-year">2027 — Q3</div>
+                    <div class="roadmap-title">Global Expansion</div>
+                    <div>Reaching Bengali communities worldwide — India, UK, USA, Middle East.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section id="waitlist" class="section">
+        <div class="section-container">
+            <div class="coming-soon" data-aos="zoom-in">
+                <h2>Be the First to Experience Pivolve</h2>
+                <p style="margin: 1rem 0;">Join the waitlist and get early access when we launch.</p>
+                <form class="waitlist-form" id="waitlistForm">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-primary">Notify Me</button>
+                </form>
+                <p style="margin-top: 1.5rem; font-size: 0.8rem; color: #666;"> This is Tanjil's dream project — building the future of AI from Bangladesh 🇧🇩</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#mission">Mission</a>
+                <a href="#ideas">AI Ideas</a>
+                <a href="#products">Products</a>
+                <a href="#roadmap">Roadmap</a>
+                <a href="index.html">Tanjil Sarkar</a>
+            </div>
+            <div class="copyright">
+                <p>© 2026 Pivolve — Dreamed and Built by Tanjil Sarkar | From Bangladesh with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 6 + 'px';
+            cursor.style.top = e.clientY - 6 + 'px';
+            cursorFollower.style.left = e.clientX - 15 + 'px';
+            cursorFollower.style.top = e.clientY - 15 + 'px';
+        });
+
+        // Mobile menu
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Waitlist form
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('🎉 Thank you! You\'re on the Pivolve waitlist. We\'ll notify you when we launch!');
+            this.reset();
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
