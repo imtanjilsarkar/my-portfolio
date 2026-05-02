@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Tanjil Sarkar - University Projects at IUB. CanSat, IoT Poultry Farm, Soccer Bot, Line Following Car, Audio Amplifier">
+    <meta name="author" content="Tanjil Sarkar">
+    <title>University Projects | Tanjil Sarkar</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a0a0a, #030303);
+            color: #e8e8e8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: #6366f1;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            box-shadow: 0 0 20px #6366f1;
+        }
+
+        .cursor-follower {
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(99, 102, 241, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.2s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: auto;
+            max-width: 90%;
+            background: rgba(20, 20, 30, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            top: 10px;
+            background: rgba(15, 15, 25, 0.9);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 8px #6366f1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e8e8e8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #6366f1;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #e8e8e8;
+        }
+
+        /* Page Header */
+        .page-header {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding-top: 100px;
+        }
+
+        .page-header-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(99, 102, 241, 0.15), transparent 60%);
+        }
+
+        .page-header-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            color: #a0a0b0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .page-header h1 {
+                font-size: 4rem;
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 5%;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: #6366f1;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff, #a0a0b0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .project-card {
+            padding: 1.8rem;
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px);
+            border-color: #6366f1;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            color: #6366f1;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #e8e8e8;
+        }
+
+        .project-card p {
+            color: #a0a0b0;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .project-tech span {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 50px;
+            color: #a0a0b0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6366f1;
+            text-decoration: none;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #8b5cf6;
+            transform: translateX(-5px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #050508;
+            padding: 60px 5% 30px;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: #666680;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #6366f1;
+        }
+
+        .copyright {
+            color: #444450;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 968px) {
+            .navbar {
+                width: 95%;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                background: rgba(15, 15, 25, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1.5rem;
+                border-radius: 20px;
+                gap: 1rem;
+                text-align: center;
+                border: 1px solid rgba(99, 102, 241, 0.2);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/Tanjil.png" alt="Tanjil Sarkar">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#achievements">Achievements</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="pivolve.html">PIVOLVE</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-bg"></div>
+        <div class="page-header-content" data-aos="fade-up">
+            <h1>University <span class="gradient-text">Projects</span></h1>
+            <p>Innovative projects developed during my academic journey at IUB</p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section">
+        <div class="section-container">
+            <div class="section-tag" data-aos="fade-up">✦ INNOVATION LAB</div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Engineering & Robotics Projects</h2>
+            <div class="projects-grid">
+                
+                <!-- Project 1: CanSat -->
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="project-icon"><i class="fas fa-satellite"></i></div>
+                    <h3>CanSat Environmental Data Project</h3>
+                    <p>Team project developing a miniaturized satellite system for collecting environmental data including temperature, humidity, and air pressure using sensors and communication modules.</p>
+                    <div class="project-tech">
+                        <span>Arduino</span>
+                        <span>Sensors</span>
+                        <span>LoRa</span>
+                        <span>Embedded Systems</span>
+                    </div>
+                </div>
+
+                <!-- Project 2: IoT Poultry Farm -->
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="150">
+                    <div class="project-icon"><i class="fas fa-tractor"></i></div>
+                    <h3>IoT Based Poultry Farm Management</h3>
+                    <p>Smart poultry farm system that monitors and controls temperature, humidity, and other environmental factors automatically to ensure optimal conditions for poultry health.</p>
+                    <div class="project-tech">
+                        <span>IoT</span>
+                        <span>Arduino</span>
+                        <span>Sensors</span>
+                        <span>NodeMCU</span>
+                    </div>
+                </div>
+
+                <!-- Project 3: Soccer Bot -->
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="project-icon"><i class="fas fa-futbol"></i></div>
+                    <h3>Soccer Bot</h3>
+                    <p>Autonomous soccer-playing robot designed for robotic competitions. Features ball detection, navigation, and kicking mechanism using computer vision and motor control.</p>
+                    <div class="project-tech">
+                        <span>Arduino</span>
+                        <span>Motor Control</span>
+                        <span>IR Sensors</span>
+                        <span>Robotics</span>
+                    </div>
+                </div>
+
+                <!-- Project 4: Line Following Car -->
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="250">
+                    <div class="project-icon"><i class="fas fa-car"></i></div>
+                    <h3>Line Following Car</h3>
+                    <p>Autonomous vehicle that follows a predefined path using infrared sensors and PID control algorithm for smooth navigation.</p>
+                    <div class="project-tech">
+                        <span>Arduino</span>
+                        <span>IR Sensors</span>
+                        <span>PID Control</span>
+                        <span>Embedded C</span>
+                    </div>
+                </div>
+
+                <!-- Project 5: Audio Amplifier -->
+                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="300">
+                    <div class="project-icon"><i class="fas fa-music"></i></div>
+                    <h3>Audio Amplifier</h3>
+                    <p>High-fidelity audio amplifier circuit designed and built from scratch using transistors and operational amplifiers for clear sound reproduction.</p>
+                    <div class="project-tech">
+                        <span>Electronics</span>
+                        <span>Circuit Design</span>
+                        <span>Transistors</span>
+                        <span>Op-Amps</span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <a href="index.html#experience" class="back-link" data-aos="fade-up">
+                <i class="fas fa-arrow-left"></i> Back to Experience
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="index.html#home">Home</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#achievements">Achievements</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="pivolve.html">PIVOLVE</a>
+            </div>
+            <div class="copyright">
+                <p>© 2026 Tanjil Sarkar — From Bangladesh with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 6 + 'px';
+            cursor.style.top = e.clientY - 6 + 'px';
+            cursorFollower.style.left = e.clientX - 15 + 'px';
+            cursorFollower.style.top = e.clientY - 15 + 'px';
+        });
+
+        // Mobile menu
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
