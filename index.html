@@ -590,6 +590,154 @@
             transform: translateX(5px);
         }
 
+        /* ========== CHROME EXTENSIONS SECTION ========== */
+        .extensions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .extensions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .extensions-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .extension-card {
+            padding: 1.8rem;
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            transition: all 0.5s ease;
+        }
+
+        .extension-card:hover {
+            transform: translateY(-10px);
+            border-color: #6366f1;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .extension-card.coming-soon {
+            opacity: 0.8;
+        }
+
+        .extension-card.coming-soon:hover {
+            border-color: #8b5cf6;
+        }
+
+        .extension-icon {
+            font-size: 2rem;
+            color: #6366f1;
+            margin-bottom: 1rem;
+        }
+
+        .extension-card.coming-soon .extension-icon {
+            color: #8b5cf6;
+        }
+
+        .extension-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #e8e8e8;
+        }
+
+        .extension-card p {
+            color: #a0a0b0;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .extension-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .extension-tech span {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 50px;
+            color: #a0a0b0;
+        }
+
+        .extension-status {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .live-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50px;
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .soon-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 50px;
+            color: #8b5cf6;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .version-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 50px;
+            color: #6366f1;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .extension-links {
+            margin-top: 1rem;
+        }
+
+        .extension-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6366f1;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .extension-link:hover {
+            color: #8b5cf6;
+            transform: translateX(5px);
+        }
+
+        .extensions-note {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding: 1rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 15px;
+            color: #666680;
+            font-size: 0.85rem;
+        }
+
+        .extensions-note i {
+            color: #6366f1;
+            margin-right: 0.5rem;
+        }
+
         /* Achievements */
         .achievements-grid {
             display: grid;
@@ -893,6 +1041,7 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#extensions">Extensions</a></li>
                 <li><a href="#achievements">Achievements</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="pivolve.html" class="pivolve-nav-link">PIVOLVE</a></li>
@@ -970,7 +1119,7 @@
         </div>
     </section>
 
-        <!-- Projects Section - WITH LIVE CGPA CALCULATOR LINK -->
+    <!-- Projects Section -->
     <section id="projects" class="section">
         <div class="section-container">
             <div class="section-tag" data-aos="fade-up">WORK</div>
@@ -1025,6 +1174,92 @@
                     </div>
                     <span class="project-link">Learn More →</span>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CHROME EXTENSIONS SECTION ========== -->
+    <section id="extensions" class="section">
+        <div class="section-container">
+            <div class="section-tag" data-aos="fade-up">✦ BROWSER TOOLS</div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Chrome Extensions</h2>
+            <div class="extensions-grid">
+                
+                <!-- Extension 1: PiVolve Auto Linker (Current) -->
+                <div class="extension-card" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="extension-icon"><i class="fas fa-link"></i></div>
+                    <h3>PiVolve Auto Linker</h3>
+                    <p>Instantly understand CSE keywords while browsing. Hover over any CS keyword on any webpage — get definition, GeeksforGeeks article, and YouTube tutorial. No new tab. No searching. Just hover.</p>
+                    <div class="extension-tech">
+                        <span>JavaScript</span>
+                        <span>Chrome API</span>
+                        <span>Manifest V3</span>
+                        <span>125+ Keywords</span>
+                    </div>
+                    <div class="extension-status">
+                        <span class="live-badge">Active</span>
+                        <span class="version-badge">v1.0</span>
+                    </div>
+                    <div class="extension-links">
+                        <a href="https://github.com/imtanjilsarkar/pivolve-auto-linker" target="_blank" class="extension-link"><i class="fab fa-github"></i> Install from GitHub →</a>
+                    </div>
+                </div>
+
+                <!-- Extension 2: Coming Soon -->
+                <div class="extension-card coming-soon" data-aos="zoom-in-up" data-aos-delay="150">
+                    <div class="extension-icon"><i class="fas fa-hourglass-half"></i></div>
+                    <h3>Coming Soon</h3>
+                    <p>Next extension in development. Something exciting for CSE students.</p>
+                    <div class="extension-tech">
+                        <span>In Development</span>
+                    </div>
+                    <div class="extension-status">
+                        <span class="soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Extension 3: Coming Soon -->
+                <div class="extension-card coming-soon" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="extension-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Coming Soon</h3>
+                    <p>Another useful tool for students and developers.</p>
+                    <div class="extension-tech">
+                        <span>Planning Phase</span>
+                    </div>
+                    <div class="extension-status">
+                        <span class="soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Extension 4: Coming Soon -->
+                <div class="extension-card coming-soon" data-aos="zoom-in-up" data-aos-delay="250">
+                    <div class="extension-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Coming Soon</h3>
+                    <p>Making complex topics simple and accessible.</p>
+                    <div class="extension-tech">
+                        <span>Ideation</span>
+                    </div>
+                    <div class="extension-status">
+                        <span class="soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Extension 5: Coming Soon -->
+                <div class="extension-card coming-soon" data-aos="zoom-in-up" data-aos-delay="300">
+                    <div class="extension-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Coming Soon</h3>
+                    <p>More extensions on the way to help students learn better.</p>
+                    <div class="extension-tech">
+                        <span>Future Project</span>
+                    </div>
+                    <div class="extension-status">
+                        <span class="soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="extensions-note" data-aos="fade-up">
+                <p><i class="fab fa-github"></i> All extensions are open-source and available on my GitHub. Installation guide provided in repository.</p>
             </div>
         </div>
     </section>
@@ -1085,6 +1320,7 @@
                         <li><a href="#skills">SKILLS</a></li>
                         <li><a href="#experience">EXPERIENCE</a></li>
                         <li><a href="#projects">PROJECTS</a></li>
+                        <li><a href="#extensions">EXTENSIONS</a></li>
                         <li><a href="#achievements">ACHIEVEMENTS</a></li>
                         <li><a href="pivolve.html" class="footer-pivolve-link">PIVOLVE AI</a></li>
                     </ul>
