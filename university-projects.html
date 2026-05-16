@@ -2,543 +2,1047 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Tanjil Sarkar - University Projects at IUB. CanSat, IoT Poultry Farm, Soccer Bot, Line Following Car, Audio Amplifier">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tanjil Sarkar — University Projects at IUB. CanSat, IoT, Robotics, Software & more.">
     <meta name="author" content="Tanjil Sarkar">
-    <title>University Projects | Tanjil Sarkar</title>
-    
+    <title>University Projects | Tanjil Sarkar · IUB</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg:           #06060a;
+            --bg2:          #0c0c14;
+            --surface:      rgba(255,255,255,0.03);
+            --border:       rgba(255,255,255,0.07);
+            --border-hover: rgba(109,93,222,0.5);
+            --accent:       #6d5dde;
+            --accent2:      #9b8bf4;
+            --accent3:      #c084fc;
+            --text:         #e8e6f0;
+            --muted:        #6b6880;
+            --muted2:       #4a4760;
+            --white:        #ffffff;
+            --font-display: 'Playfair Display', serif;
+            --font-body:    'Outfit', sans-serif;
+            --font-mono:    'JetBrains Mono', monospace;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: radial-gradient(circle at 20% 30%, #0a0a0a, #030303);
-            color: #e8e8e8;
-            line-height: 1.6;
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Custom Cursor */
-        .cursor {
-            width: 12px;
-            height: 12px;
-            background: #6366f1;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            box-shadow: 0 0 20px #6366f1;
+        /* NOISE */
+        body::before {
+            content:'';
+            position:fixed; inset:0;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            opacity:0.04; pointer-events:none; z-index:9999;
         }
 
-        .cursor-follower {
-            width: 30px;
-            height: 30px;
-            border: 2px solid rgba(99, 102, 241, 0.5);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.2s ease;
+        /* CURSOR */
+        #cursor {
+            width:10px; height:10px;
+            background:var(--accent2);
+            border-radius:50%;
+            position:fixed; pointer-events:none;
+            z-index:10000; mix-blend-mode:exclusion;
+        }
+        #cursor-ring {
+            width:36px; height:36px;
+            border:1.5px solid rgba(155,139,244,0.5);
+            border-radius:50%;
+            position:fixed; pointer-events:none;
+            z-index:10000;
+            transition:all 0.35s var(--ease-out-expo);
+        }
+        body:has(a:hover) #cursor-ring,
+        body:has(button:hover) #cursor-ring {
+            transform:scale(2.2);
+            border-color:var(--accent2);
+            background:rgba(109,93,222,0.08);
         }
 
-        html {
-            scroll-behavior: smooth;
+        /* LOADER */
+        #loader {
+            position:fixed; inset:0;
+            background:var(--bg);
+            z-index:99999;
+            display:flex; flex-direction:column;
+            align-items:center; justify-content:center; gap:1.5rem;
+            transition:opacity 0.5s, visibility 0.5s;
+        }
+        #loader.gone { opacity:0; visibility:hidden; }
+        .loader-name {
+            font-family:var(--font-display);
+            font-size:1.4rem; font-weight:800;
+            color:var(--white); letter-spacing:-0.01em;
+        }
+        .loader-name span { color:var(--accent2); font-style:italic; }
+        .loader-bar-wrap { width:180px; height:1px; background:var(--border); overflow:hidden; }
+        .loader-bar {
+            height:100%; width:0%;
+            background:linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            animation:load-progress 1.3s var(--ease-out-expo) forwards;
+        }
+        @keyframes load-progress { 0%{width:0%} 60%{width:70%} 100%{width:100%} }
+        .loader-pct {
+            font-family:var(--font-mono); font-size:0.62rem;
+            letter-spacing:0.2em; color:var(--muted2);
         }
 
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            width: auto;
-            max-width: 90%;
-            background: rgba(20, 20, 30, 0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 60px;
-            padding: 0.6rem 1.8rem;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: all 0.3s ease;
+        /* NAV */
+        nav {
+            position:fixed; top:0; left:0; right:0;
+            z-index:900;
+            padding:0 clamp(1.5rem, 5vw, 4rem);
+            height:72px;
+            display:flex; align-items:center; justify-content:space-between;
+            border-bottom:1px solid transparent;
+            transition:background 0.4s, border-color 0.4s;
         }
-
-        .navbar.scrolled {
-            top: 10px;
-            background: rgba(15, 15, 25, 0.9);
-            border-color: rgba(99, 102, 241, 0.4);
+        nav.scrolled {
+            background:rgba(6,6,10,0.88);
+            backdrop-filter:blur(20px) saturate(1.4);
+            border-color:var(--border);
         }
-
-        .nav-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
+        .nav-logo {
+            font-family:var(--font-display);
+            font-size:1.25rem; font-weight:800;
+            letter-spacing:-0.02em;
+            color:var(--white); text-decoration:none;
+            font-style:italic;
         }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            transition: all 0.3s ease;
-        }
-
-        .logo img:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 8px #6366f1);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.8rem;
-            list-style: none;
-        }
-
+        .nav-logo span { color:var(--accent2); font-style:normal; }
+        .nav-links { display:flex; gap:2.2rem; list-style:none; }
         .nav-links a {
-            color: #e8e8e8;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            position: relative;
+            font-family:var(--font-body);
+            font-size:0.76rem; font-weight:500;
+            letter-spacing:0.1em; text-transform:uppercase;
+            color:var(--muted); text-decoration:none;
+            transition:color 0.25s; position:relative;
         }
-
         .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6);
-            transition: width 0.3s ease;
+            content:''; position:absolute;
+            left:0; bottom:-4px; width:0; height:1px;
+            background:var(--accent2);
+            transition:width 0.3s var(--ease-out-expo);
         }
-
-        .nav-links a:hover::after {
-            width: 100%;
+        .nav-links a:hover { color:var(--text); }
+        .nav-links a:hover::after { width:100%; }
+        .nav-back {
+            font-family:var(--font-body);
+            font-size:0.75rem; font-weight:500;
+            letter-spacing:0.1em; text-transform:uppercase;
+            padding:0.55rem 1.4rem;
+            border:1px solid var(--border); border-radius:100px;
+            color:var(--muted); text-decoration:none;
+            transition:all 0.3s;
         }
-
-        .nav-links a:hover {
-            color: #6366f1;
-            transform: translateY(-2px);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #e8e8e8;
-        }
-
-        /* Page Header */
-        .page-header {
-            min-height: 40vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding-top: 100px;
-        }
-
-        .page-header-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 30% 40%, rgba(99, 102, 241, 0.15), transparent 60%);
-        }
-
-        .page-header-content {
-            z-index: 2;
-            position: relative;
-        }
-
-        .page-header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .page-header p {
-            color: #a0a0b0;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 768px) {
-            .page-header h1 {
-                font-size: 4rem;
+        .nav-back:hover { border-color:var(--border-hover); color:var(--text); }
+        .mobile-toggle { display:none; cursor:pointer; color:var(--text); font-size:1.3rem; }
+        @media (max-width:900px) {
+            .nav-links, .nav-back { display:none; }
+            .mobile-toggle { display:block; }
+            .nav-links.open {
+                display:flex; flex-direction:column;
+                position:absolute; top:72px; left:0; right:0;
+                background:rgba(6,6,10,0.97);
+                backdrop-filter:blur(20px);
+                padding:2rem; border-bottom:1px solid var(--border);
+                gap:1.5rem;
             }
         }
 
-        /* Sections */
-        .section {
-            padding: 5rem 5%;
-        }
-
-        .section-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-tag {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: #6366f1;
-            margin-bottom: 1rem;
-            display: block;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, #ffffff, #a0a0b0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        @media (min-width: 768px) {
-            .section-title {
-                font-size: 2.5rem;
-            }
-        }
-
-        /* Projects Grid */
-        .projects-grid {
+        /* HERO / PAGE HEADER */
+        .page-hero {
+            min-height: 60vh;
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .project-card {
-            padding: 1.8rem;
-            background: rgba(20, 20, 30, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(99, 102, 241, 0.15);
-            border-radius: 20px;
-            transition: all 0.5s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-12px);
-            border-color: #6366f1;
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
-        }
-
-        .project-icon {
-            font-size: 2rem;
-            color: #6366f1;
-            margin-bottom: 1rem;
-        }
-
-        .project-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #e8e8e8;
-        }
-
-        .project-card p {
-            color: #a0a0b0;
-            margin-bottom: 1rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .project-tech span {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.8rem;
-            background: rgba(99, 102, 241, 0.15);
-            border-radius: 50px;
-            color: #a0a0b0;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #6366f1;
-            text-decoration: none;
-            margin-top: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: #8b5cf6;
-            transform: translateX(-5px);
-        }
-
-        /* Footer */
-        .footer {
-            background: #050508;
-            padding: 60px 5% 30px;
-            border-top: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
+            place-items: center;
+            padding: 8rem clamp(1.5rem, 6vw, 5rem) 5rem;
+            position: relative;
+            overflow: hidden;
             text-align: center;
         }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
+        .page-hero::before {
+            content:'';
+            position:absolute; inset:0;
+            background-image:
+                linear-gradient(rgba(109,93,222,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(109,93,222,0.06) 1px, transparent 1px);
+            background-size:60px 60px;
+            mask-image:radial-gradient(ellipse 70% 80% at 50% 50%, black 20%, transparent 100%);
+            animation:grid-drift 30s linear infinite;
+        }
+        @keyframes grid-drift {
+            0%{background-position:0 0} 100%{background-position:60px 60px}
+        }
+        .page-hero-orb {
+            position:absolute; border-radius:50%; pointer-events:none;
+            background:radial-gradient(circle, rgba(109,93,222,0.18) 0%, transparent 70%);
+            width:600px; height:600px;
+            top:-200px; left:-150px;
+            animation:orb-drift 20s ease-in-out infinite alternate;
+        }
+        @keyframes orb-drift {
+            0%{transform:translate(0,0)} 100%{transform:translate(40px,30px)}
+        }
+        .page-hero-inner { position:relative; z-index:2; max-width:800px; }
+        .page-hero-eyebrow {
+            display:inline-flex; align-items:center; gap:0.7rem;
+            font-family:var(--font-mono); font-size:0.62rem;
+            letter-spacing:0.22em; text-transform:uppercase; color:var(--accent2);
+            margin-bottom:2rem; padding:0.45rem 1.2rem;
+            border:1px solid rgba(155,139,244,0.2); border-radius:100px;
+            background:rgba(109,93,222,0.06);
+            opacity:0; animation:slide-up 0.8s var(--ease-out-expo) 0.3s forwards;
+        }
+        .page-hero h1 {
+            font-family:var(--font-display);
+            font-size:clamp(3rem, 8vw, 6rem);
+            font-weight:900; line-height:1;
+            letter-spacing:-0.025em; color:var(--white);
+            opacity:0; animation:slide-up 0.9s var(--ease-out-expo) 0.45s forwards;
+        }
+        .page-hero h1 em {
+            font-style:italic; color:var(--accent2);
+        }
+        .page-hero-sub {
+            font-family:var(--font-body);
+            font-size:1rem; font-weight:300; color:var(--muted);
+            max-width:520px; margin:1.5rem auto 0; line-height:1.8;
+            opacity:0; animation:slide-up 0.9s var(--ease-out-expo) 0.6s forwards;
         }
 
+        /* STATS BAR */
+        .stats-bar {
+            display:flex; justify-content:center;
+            gap:0; margin-top:3.5rem;
+            border:1px solid var(--border); border-radius:16px; overflow:hidden;
+            background:var(--border); width:100%; max-width:600px; margin-left:auto; margin-right:auto;
+            opacity:0; animation:slide-up 0.9s var(--ease-out-expo) 0.75s forwards;
+        }
+        .stat-pill {
+            flex:1; background:var(--bg);
+            padding:1.2rem 1.5rem; text-align:center;
+            transition:background 0.3s;
+        }
+        .stat-pill:hover { background:rgba(109,93,222,0.06); }
+        .stat-pill-num {
+            font-family:var(--font-display);
+            font-size:1.8rem; font-weight:900;
+            background:linear-gradient(135deg, var(--accent2), var(--accent3));
+            -webkit-background-clip:text; background-clip:text; color:transparent;
+        }
+        .stat-pill-label {
+            font-family:var(--font-mono);
+            font-size:0.58rem; letter-spacing:0.12em;
+            text-transform:uppercase; color:var(--muted); margin-top:0.2rem;
+        }
+
+        @keyframes slide-up {
+            from{opacity:0; transform:translateY(22px)}
+            to{opacity:1; transform:translateY(0)}
+        }
+        @keyframes fade-in { to{opacity:1} }
+
+        /* MARQUEE */
+        .marquee-wrap {
+            padding:1.4rem 0; overflow:hidden;
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
+            background:var(--bg2);
+        }
+        .marquee-track {
+            display:flex; gap:3rem;
+            animation:marquee 28s linear infinite;
+            width:max-content;
+        }
+        .marquee-item {
+            font-family:var(--font-mono); font-size:0.62rem;
+            letter-spacing:0.15em; text-transform:uppercase;
+            color:var(--muted2); white-space:nowrap;
+            display:flex; align-items:center; gap:1.2rem;
+        }
+        .marquee-item::after { content:'✦'; color:var(--accent); font-size:0.45rem; }
+        @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+        /* SECTION BASE */
+        section.content { padding:clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem); }
+        .section-inner { max-width:1100px; margin:0 auto; }
+        .section-label {
+            display:inline-flex; align-items:center; gap:0.8rem;
+            font-family:var(--font-mono); font-size:0.62rem;
+            letter-spacing:0.2em; text-transform:uppercase;
+            color:var(--accent2); margin-bottom:1.2rem;
+        }
+        .section-label::before {
+            content:''; display:block; width:20px; height:1px; background:var(--accent2);
+        }
+        .section-title {
+            font-family:var(--font-display);
+            font-size:clamp(2rem, 5vw, 3.2rem);
+            font-weight:700; letter-spacing:-0.025em;
+            color:var(--white); line-height:1.1; margin-bottom:3rem;
+        }
+        .section-title em { font-style:italic; color:var(--accent2); }
+
+        /* REVEAL */
+        .reveal {
+            opacity:0; transform:translateY(28px);
+            transition:opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+        }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .reveal-delay-1{transition-delay:0.08s}
+        .reveal-delay-2{transition-delay:0.16s}
+        .reveal-delay-3{transition-delay:0.24s}
+        .reveal-delay-4{transition-delay:0.32s}
+        .reveal-delay-5{transition-delay:0.40s}
+        .reveal-delay-6{transition-delay:0.48s}
+        .reveal-delay-7{transition-delay:0.56s}
+        .reveal-delay-8{transition-delay:0.64s}
+        .reveal-delay-9{transition-delay:0.72s}
+        .reveal-delay-10{transition-delay:0.80s}
+
+        /* CATEGORY PILL */
+        .cat-row {
+            display:flex; gap:0.7rem; flex-wrap:wrap; margin-bottom:2.5rem;
+        }
+        .cat-pill {
+            font-family:var(--font-mono); font-size:0.62rem;
+            letter-spacing:0.1em; text-transform:uppercase;
+            padding:0.45rem 1.1rem; border-radius:100px;
+            border:1px solid var(--border); color:var(--muted2);
+            cursor:pointer; transition:all 0.25s;
+            background:transparent;
+        }
+        .cat-pill.active, .cat-pill:hover {
+            border-color:var(--accent2); color:var(--accent2);
+            background:rgba(109,93,222,0.08);
+        }
+
+        /* PROJECT CARDS GRID */
+        .proj-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(310px, 1fr));
+            gap:1.5rem;
+        }
+
+        /* FEATURED (span 2 cols) */
+        .proj-card {
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:20px; padding:2rem;
+            display:flex; flex-direction:column;
+            transition:all 0.45s var(--ease-out-expo);
+            position:relative; overflow:hidden;
+            cursor:default;
+        }
+        .proj-card::after {
+            content:'';
+            position:absolute; inset:0;
+            background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(109,93,222,0.1), transparent 60%);
+            opacity:0; transition:opacity 0.4s; pointer-events:none;
+        }
+        .proj-card:hover::after { opacity:1; }
+        .proj-card:hover {
+            border-color:var(--border-hover);
+            transform:translateY(-8px);
+            box-shadow:0 24px 60px rgba(109,93,222,0.18);
+        }
+        .proj-card.featured {
+            grid-column:span 2;
+            flex-direction:row; gap:2rem; align-items:center;
+        }
+        @media (max-width:768px) {
+            .proj-card.featured { grid-column:span 1; flex-direction:column; }
+        }
+
+        /* Top bar accent */
+        .proj-card::before {
+            content:''; position:absolute;
+            top:0; left:0; right:0; height:1px;
+            background:linear-gradient(90deg, transparent, var(--accent2), transparent);
+            opacity:0; transition:opacity 0.4s;
+        }
+        .proj-card:hover::before { opacity:1; }
+
+        .proj-num {
+            font-family:var(--font-mono); font-size:0.58rem;
+            letter-spacing:0.18em; color:var(--muted2); margin-bottom:1.2rem;
+        }
+        .proj-icon-wrap {
+            width:46px; height:46px; border-radius:12px;
+            background:rgba(109,93,222,0.1);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--accent2); font-size:1.15rem; margin-bottom:1.2rem;
+            transition:all 0.35s;
+        }
+        .proj-card:hover .proj-icon-wrap {
+            background:rgba(109,93,222,0.22);
+            transform:scale(1.1) rotate(-4deg);
+        }
+        .proj-card h3 {
+            font-family:var(--font-display);
+            font-size:1.12rem; font-weight:700;
+            color:var(--white); margin-bottom:0.5rem; line-height:1.3;
+        }
+        .proj-card p {
+            font-size:0.86rem; color:var(--muted);
+            line-height:1.7; flex:1;
+        }
+        .proj-tags {
+            display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1.2rem;
+        }
+        .proj-tag {
+            font-family:var(--font-mono); font-size:0.6rem;
+            padding:0.22rem 0.7rem; border-radius:100px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid var(--border); color:var(--muted2);
+        }
+        .proj-badge {
+            display:inline-flex; align-items:center; gap:0.4rem;
+            font-family:var(--font-mono); font-size:0.58rem;
+            letter-spacing:0.1em; text-transform:uppercase;
+            margin-bottom:1rem;
+        }
+        .badge-dot { width:5px; height:5px; border-radius:50%; }
+        .badge-dot.team { background:#4ade80; }
+        .badge-dot.solo { background:var(--accent2); }
+        .badge-dot.comp  { background:var(--accent3); }
+        .badge-team { color:#4ade80; }
+        .badge-solo { color:var(--accent2); }
+        .badge-comp  { color:var(--accent3); }
+
+        /* Featured visual */
+        .proj-featured-visual {
+            width:240px; min-width:200px; aspect-ratio:1;
+            border-radius:16px;
+            background:linear-gradient(135deg, rgba(109,93,222,0.15), rgba(192,132,252,0.07));
+            border:1px solid var(--border);
+            display:flex; align-items:center; justify-content:center;
+            position:relative; overflow:hidden;
+            font-size:4rem;
+            flex-shrink:0;
+        }
+        .proj-featured-visual::before {
+            content:'';
+            position:absolute; inset:0;
+            background:repeating-linear-gradient(
+                0deg, transparent, transparent 22px,
+                rgba(109,93,222,0.05) 22px, rgba(109,93,222,0.05) 23px
+            );
+        }
+        @media (max-width:768px) {
+            .proj-featured-visual { width:100%; aspect-ratio:16/9; }
+        }
+
+        /* DIVIDER */
+        .section-divider {
+            height:1px; background:var(--border);
+            margin:clamp(3rem, 6vw, 5rem) 0;
+        }
+
+        /* SKILLS LEARNED */
+        .skills-band {
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+            gap:1px; border:1px solid var(--border);
+            border-radius:20px; overflow:hidden; background:var(--border);
+        }
+        .skill-cell {
+            background:var(--bg2); padding:2rem; transition:background 0.3s;
+        }
+        .skill-cell:hover { background:rgba(109,93,222,0.05); }
+        .skill-cell-title {
+            font-family:var(--font-mono);
+            font-size:0.62rem; letter-spacing:0.12em;
+            text-transform:uppercase; color:var(--accent2); margin-bottom:1rem;
+        }
+        .tags { display:flex; flex-wrap:wrap; gap:0.5rem; }
+        .tag {
+            font-size:0.76rem; padding:0.32rem 0.8rem;
+            border:1px solid var(--border); border-radius:100px;
+            color:var(--muted); transition:all 0.25s; cursor:default;
+        }
+        .tag:hover { border-color:var(--accent2); color:var(--accent2); background:rgba(155,139,244,0.06); }
+
+        /* BACK LINK */
+        .back-wrap { margin-top:3.5rem; }
+        .back-link {
+            display:inline-flex; align-items:center; gap:0.6rem;
+            font-family:var(--font-body); font-size:0.82rem;
+            font-weight:500; letter-spacing:0.06em; text-transform:uppercase;
+            color:var(--muted); text-decoration:none;
+            padding:0.8rem 1.8rem; border:1px solid var(--border);
+            border-radius:100px; transition:all 0.35s var(--ease-out-expo);
+        }
+        .back-link:hover {
+            border-color:var(--border-hover); color:var(--text);
+            transform:translateX(-4px);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top:1px solid var(--border);
+            padding:2.5rem clamp(1.5rem, 6vw, 5rem);
+            background:var(--bg);
+        }
+        .footer-inner {
+            max-width:1100px; margin:0 auto;
+            display:flex; justify-content:space-between;
+            align-items:center; flex-wrap:wrap; gap:1.5rem;
+        }
+        .footer-logo {
+            font-family:var(--font-display);
+            font-size:1.1rem; font-weight:800;
+            color:var(--white); text-decoration:none; font-style:italic;
+        }
+        .footer-logo span { color:var(--accent2); font-style:normal; }
+        .footer-links { display:flex; gap:2rem; list-style:none; flex-wrap:wrap; }
         .footer-links a {
-            color: #666680;
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: color 0.3s;
+            font-family:var(--font-mono); font-size:0.64rem;
+            letter-spacing:0.12em; text-transform:uppercase;
+            color:var(--muted2); text-decoration:none; transition:color 0.25s;
         }
-
-        .footer-links a:hover {
-            color: #6366f1;
-        }
-
-        .copyright {
-            color: #444450;
-            font-size: 0.7rem;
-        }
-
-        @media (max-width: 968px) {
-            .navbar {
-                width: 95%;
-                padding: 0.6rem 1.2rem;
-            }
-            
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 60px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 90%;
-                background: rgba(15, 15, 25, 0.95);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 1.5rem;
-                border-radius: 20px;
-                gap: 1rem;
-                text-align: center;
-                border: 1px solid rgba(99, 102, 241, 0.2);
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
+        .footer-links a:hover { color:var(--text); }
+        .footer-copy {
+            font-family:var(--font-mono); font-size:0.62rem;
+            letter-spacing:0.06em; color:var(--muted2);
         }
     </style>
 </head>
 <body>
 
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-name">Tanjil <span>Sarkar</span></div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+</div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <img src="images/Tanjil.png" alt="Tanjil Sarkar">
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+    <a href="index.html" class="nav-logo">TS<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="pivolve.html">Pivolve</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="index.html#experience" class="nav-back">← Back</a>
+    <div class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+    <div class="page-hero-orb"></div>
+    <div class="page-hero-inner">
+        <div class="page-hero-eyebrow">IUB · Bangladesh · Academic Projects</div>
+        <h1>University<br><em>Projects.</em></h1>
+        <p class="page-hero-sub">Hands-on engineering, software, and research projects built across semesters at Independent University, Bangladesh — from CanSats to full-stack systems.</p>
+        <div class="stats-bar">
+            <div class="stat-pill">
+                <div class="stat-pill-num">12+</div>
+                <div class="stat-pill-label">Projects</div>
+            </div>
+            <div class="stat-pill">
+                <div class="stat-pill-num">8</div>
+                <div class="stat-pill-label">Semesters</div>
+            </div>
+            <div class="stat-pill">
+                <div class="stat-pill-num">6+</div>
+                <div class="stat-pill-label">Team Roles</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+    <div class="marquee-track">
+        <span class="marquee-item">Embedded Systems</span>
+        <span class="marquee-item">Robotics</span>
+        <span class="marquee-item">IoT</span>
+        <span class="marquee-item">Full-Stack Web</span>
+        <span class="marquee-item">Database Design</span>
+        <span class="marquee-item">Circuit Design</span>
+        <span class="marquee-item">Machine Learning</span>
+        <span class="marquee-item">CanSat</span>
+        <span class="marquee-item">Climate Research</span>
+        <span class="marquee-item">Team Leadership</span>
+        <span class="marquee-item">Embedded Systems</span>
+        <span class="marquee-item">Robotics</span>
+        <span class="marquee-item">IoT</span>
+        <span class="marquee-item">Full-Stack Web</span>
+        <span class="marquee-item">Database Design</span>
+        <span class="marquee-item">Circuit Design</span>
+        <span class="marquee-item">Machine Learning</span>
+        <span class="marquee-item">CanSat</span>
+        <span class="marquee-item">Climate Research</span>
+        <span class="marquee-item">Team Leadership</span>
+    </div>
+</div>
+
+<!-- ══════════════════════ HARDWARE & ROBOTICS ══════════════════════ -->
+<section class="content" style="background:var(--bg);">
+    <div class="section-inner">
+        <div class="section-label reveal">Hardware · Robotics · Embedded</div>
+        <h2 class="section-title reveal reveal-delay-1">Engineering &amp; <em>Hardware</em> Projects</h2>
+
+        <div class="proj-grid">
+
+            <!-- FEATURED: CanSat -->
+            <div class="proj-card featured reveal reveal-delay-1">
+                <div>
+                    <div class="proj-badge">
+                        <div class="badge-dot team"></div>
+                        <span class="badge-team">Team Lead · Competition</span>
+                    </div>
+                    <div class="proj-num">01 / Featured</div>
+                    <div class="proj-icon-wrap"><i class="fas fa-satellite"></i></div>
+                    <h3>CanSat — Atmospheric Data Satellite</h3>
+                    <p>Designed and built a miniaturized satellite (can-sized) that collects real-time atmospheric data — temperature, humidity, air pressure, altitude — during flight via LoRa radio telemetry to a ground station. Programmed onboard sensor fusion and live data visualization.</p>
+                    <div class="proj-tags">
+                        <span class="proj-tag">Arduino</span>
+                        <span class="proj-tag">LoRa Module</span>
+                        <span class="proj-tag">BME280</span>
+                        <span class="proj-tag">Embedded C</span>
+                        <span class="proj-tag">Telemetry</span>
+                        <span class="proj-tag">Python</span>
+                    </div>
+                </div>
+                <div class="proj-featured-visual">🛰️</div>
+            </div>
+
+            <!-- IoT Poultry -->
+            <div class="proj-card reveal reveal-delay-2">
+                <div class="proj-badge">
+                    <div class="badge-dot team"></div>
+                    <span class="badge-team">Team Project</span>
+                </div>
+                <div class="proj-num">02</div>
+                <div class="proj-icon-wrap"><i class="fas fa-temperature-half"></i></div>
+                <h3>IoT Poultry Farm Management</h3>
+                <p>Smart farm system that autonomously monitors and controls temperature, humidity, feed dispensing, and ammonia levels. Mobile alerts via Blynk IoT dashboard. Deployed and tested with real poultry data.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">NodeMCU ESP8266</span>
+                    <span class="proj-tag">DHT22</span>
+                    <span class="proj-tag">Blynk IoT</span>
+                    <span class="proj-tag">Arduino</span>
+                    <span class="proj-tag">Relay Module</span>
+                </div>
+            </div>
+
+            <!-- Soccer Bot -->
+            <div class="proj-card reveal reveal-delay-3">
+                <div class="proj-badge">
+                    <div class="badge-dot comp"></div>
+                    <span class="badge-comp">Competition · Team Lead</span>
+                </div>
+                <div class="proj-num">03</div>
+                <div class="proj-icon-wrap"><i class="fas fa-futbol"></i></div>
+                <h3>Autonomous Soccer Bot</h3>
+                <p>Fully autonomous soccer-playing robot for IUB inter-department robotics competition. Features IR ball tracking, directional motor control, and a kicking mechanism. Competed against 6 other teams.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Arduino Mega</span>
+                    <span class="proj-tag">IR Sensors</span>
+                    <span class="proj-tag">L298N Driver</span>
+                    <span class="proj-tag">Servo Motor</span>
+                    <span class="proj-tag">Robotics</span>
+                </div>
+            </div>
+
+            <!-- Line Following Car -->
+            <div class="proj-card reveal reveal-delay-4">
+                <div class="proj-badge">
+                    <div class="badge-dot team"></div>
+                    <span class="badge-team">Team Project</span>
+                </div>
+                <div class="proj-num">04</div>
+                <div class="proj-icon-wrap"><i class="fas fa-car-side"></i></div>
+                <h3>PID Line Following Car</h3>
+                <p>Autonomous vehicle that navigates a track using infrared sensor arrays and a software-tuned PID control loop for smooth cornering and speed control. Achieved sub-second lap improvements through iterative tuning.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Arduino UNO</span>
+                    <span class="proj-tag">IR Array</span>
+                    <span class="proj-tag">PID Algorithm</span>
+                    <span class="proj-tag">Embedded C</span>
+                    <span class="proj-tag">Motor Shield</span>
+                </div>
+            </div>
+
+            <!-- Audio Amplifier -->
+            <div class="proj-card reveal reveal-delay-5">
+                <div class="proj-badge">
+                    <div class="badge-dot solo"></div>
+                    <span class="badge-solo">Individual · Lab</span>
+                </div>
+                <div class="proj-num">05</div>
+                <div class="proj-icon-wrap"><i class="fas fa-wave-square"></i></div>
+                <h3>Class-AB Audio Amplifier</h3>
+                <p>Designed and soldered a push-pull Class-AB transistor amplifier with op-amp pre-stage from scratch. Measured THD, frequency response, and gain on oscilloscope. Achieved ≥85% efficiency at 1W output.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">BJT Transistors</span>
+                    <span class="proj-tag">Op-Amps</span>
+                    <span class="proj-tag">Circuit Design</span>
+                    <span class="proj-tag">Oscilloscope</span>
+                    <span class="proj-tag">PCB Layout</span>
+                </div>
+            </div>
+
+            <!-- Smart Traffic Light -->
+            <div class="proj-card reveal reveal-delay-6">
+                <div class="proj-badge">
+                    <div class="badge-dot team"></div>
+                    <span class="badge-team">Team Project</span>
+                </div>
+                <div class="proj-num">06</div>
+                <div class="proj-icon-wrap"><i class="fas fa-traffic-light"></i></div>
+                <h3>Adaptive Traffic Light Controller</h3>
+                <p>Microcontroller-based traffic light system that uses IR vehicle-density sensors to dynamically adjust signal timing — reducing simulated wait time by ~35% over fixed-cycle systems.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Arduino</span>
+                    <span class="proj-tag">IR Sensors</span>
+                    <span class="proj-tag">Embedded C</span>
+                    <span class="proj-tag">Logic Design</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════ SOFTWARE & WEB ══════════════════════ -->
+<section class="content" style="background:var(--bg2);">
+    <div class="section-inner">
+        <div class="section-label reveal">Software · Web · Database</div>
+        <h2 class="section-title reveal reveal-delay-1">Software &amp; <em>Web</em> Projects</h2>
+
+        <div class="proj-grid">
+
+            <!-- Student Management System - FEATURED -->
+            <div class="proj-card featured reveal reveal-delay-1">
+                <div>
+                    <div class="proj-badge">
+                        <div class="badge-dot team"></div>
+                        <span class="badge-team">Team Project · CSE204</span>
+                    </div>
+                    <div class="proj-num">07 / Featured</div>
+                    <div class="proj-icon-wrap"><i class="fas fa-database"></i></div>
+                    <h3>Student Management System</h3>
+                    <p>Full-stack academic management platform with role-based access for admins, teachers, and students. Features course registration, grade management, attendance tracking, and a reporting dashboard with MySQL stored procedures and normalization up to 3NF.</p>
+                    <div class="proj-tags">
+                        <span class="proj-tag">PHP</span>
+                        <span class="proj-tag">MySQL</span>
+                        <span class="proj-tag">Bootstrap 5</span>
+                        <span class="proj-tag">CRUD</span>
+                        <span class="proj-tag">3NF Design</span>
+                        <span class="proj-tag">Role Auth</span>
+                    </div>
+                </div>
+                <div class="proj-featured-visual">🎓</div>
+            </div>
+
+            <!-- LifeFlow Blood Bank -->
+            <div class="proj-card reveal reveal-delay-2">
+                <div class="proj-badge">
+                    <div class="badge-dot team"></div>
+                    <span class="badge-team">Team Lead · Live</span>
+                </div>
+                <div class="proj-num">08</div>
+                <div class="proj-icon-wrap"><i class="fas fa-droplet"></i></div>
+                <h3>LifeFlow Blood Bank System</h3>
+                <p>Production blood bank management system with donor registration, blood inventory tracking, request matching, and admin panel. Live at life-flow.infinityfreeapp.com.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">PHP</span>
+                    <span class="proj-tag">MySQL</span>
+                    <span class="proj-tag">Bootstrap</span>
+                    <span class="proj-tag">Deployed</span>
+                </div>
+            </div>
+
+            <!-- Library Management -->
+            <div class="proj-card reveal reveal-delay-3">
+                <div class="proj-badge">
+                    <div class="badge-dot team"></div>
+                    <span class="badge-team">Group Project</span>
+                </div>
+                <div class="proj-num">09</div>
+                <div class="proj-icon-wrap"><i class="fas fa-book-open"></i></div>
+                <h3>University Library Management System</h3>
+                <p>Digital library platform managing book catalogues, member registrations, borrow/return cycles, late-fee calculation, and automated email reminders. Built with ERD-first design methodology.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">MySQL</span>
+                    <span class="proj-tag">PHP</span>
+                    <span class="proj-tag">ERD Design</span>
+                    <span class="proj-tag">SMTP Email</span>
+                </div>
+            </div>
+
+            <!-- IUB CGPA Calculator -->
+            <div class="proj-card reveal reveal-delay-4">
+                <div class="proj-badge">
+                    <div class="badge-dot solo"></div>
+                    <span class="badge-solo">Solo · Live</span>
+                </div>
+                <div class="proj-num">10</div>
+                <div class="proj-icon-wrap"><i class="fas fa-calculator"></i></div>
+                <h3>IUB CGPA Calculator</h3>
+                <p>Precision GPA/CGPA estimator built specifically for IUB's grading scheme. Handles multi-semester accumulation, credit weighting, and retake scenarios. Live on Vercel.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">JavaScript</span>
+                    <span class="proj-tag">HTML5</span>
+                    <span class="proj-tag">CSS3</span>
+                    <span class="proj-tag">Vercel</span>
+                </div>
+            </div>
+
+            <!-- Hospital Appointment -->
+            <div class="proj-card reveal reveal-delay-5">
+                <div class="proj-badge">
+                    <div class="badge-dot team"></div>
+                    <span class="badge-team">Group Project · CIS101</span>
+                </div>
+                <div class="proj-num">11</div>
+                <div class="proj-icon-wrap"><i class="fas fa-hospital"></i></div>
+                <h3>Hospital Appointment System</h3>
+                <p>Web-based appointment booking system for a Bangladeshi clinic context — patient portal, doctor schedule management, appointment slots, and prescription records with PDF export.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">PHP</span>
+                    <span class="proj-tag">MySQL</span>
+                    <span class="proj-tag">HTML/CSS</span>
+                    <span class="proj-tag">FPDF</span>
+                </div>
+            </div>
+
+            <!-- FindMyTutor -->
+            <div class="proj-card reveal reveal-delay-6">
+                <div class="proj-badge">
+                    <div class="badge-dot solo"></div>
+                    <span class="badge-solo">Founder · Live</span>
+                </div>
+                <div class="proj-num">12</div>
+                <div class="proj-icon-wrap"><i class="fas fa-chalkboard-user"></i></div>
+                <h3>FindMyTutor Dhaka</h3>
+                <p>Full-stack tutor-matching platform connecting students with qualified tutors in Dhaka. Real startup project — live, used by real people. Bootstrapped and deployed solo.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">React</span>
+                    <span class="proj-tag">Node.js</span>
+                    <span class="proj-tag">MongoDB</span>
+                    <span class="proj-tag">Vercel</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════ RESEARCH ══════════════════════ -->
+<section class="content" style="background:var(--bg);">
+    <div class="section-inner">
+        <div class="section-label reveal">Research · Academic Writing</div>
+        <h2 class="section-title reveal reveal-delay-1">Research &amp; <em>Academic</em> Work</h2>
+
+        <div class="proj-grid">
+
+            <!-- Climate Change Research -->
+            <div class="proj-card featured reveal reveal-delay-1">
+                <div>
+                    <div class="proj-badge">
+                        <div class="badge-dot solo"></div>
+                        <span class="badge-solo">Lead Author · In Progress</span>
+                    </div>
+                    <div class="proj-num">13 / Featured</div>
+                    <div class="proj-icon-wrap"><i class="fas fa-leaf"></i></div>
+                    <h3>Climate Change Awareness & Youth Engagement in Bangladesh</h3>
+                    <p>Original research paper examining how Bangladeshi university students perceive, respond to, and engage with climate change information. Includes survey design, quantitative analysis, and policy recommendations for youth-led climate action. Targeted for journal submission.</p>
+                    <div class="proj-tags">
+                        <span class="proj-tag">Research Design</span>
+                        <span class="proj-tag">Survey Analysis</span>
+                        <span class="proj-tag">Climate Science</span>
+                        <span class="proj-tag">Academic Writing</span>
+                        <span class="proj-tag">Bangladesh Context</span>
+                    </div>
+                </div>
+                <div class="proj-featured-visual">🌿</div>
+            </div>
+
+            <!-- Her Future Our Mission -->
+            <div class="proj-card reveal reveal-delay-2">
+                <div class="proj-badge">
+                    <div class="badge-dot comp"></div>
+                    <span class="badge-comp">Millennium Fellowship</span>
+                </div>
+                <div class="proj-num">14</div>
+                <div class="proj-icon-wrap"><i class="fas fa-venus"></i></div>
+                <h3>Her Future, Our Mission</h3>
+                <p>Social impact project under the Millennium Fellowship — designing and running workshops, awareness drives, and community outreach to support female students' education and career development at IUB.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">Social Impact</span>
+                    <span class="proj-tag">Community Outreach</span>
+                    <span class="proj-tag">Leadership</span>
+                    <span class="proj-tag">Gender Equity</span>
+                </div>
+            </div>
+
+            <!-- Algorithms Project -->
+            <div class="proj-card reveal reveal-delay-3">
+                <div class="proj-badge">
+                    <div class="badge-dot team"></div>
+                    <span class="badge-team">Group Project · CSE207</span>
+                </div>
+                <div class="proj-num">15</div>
+                <div class="proj-icon-wrap"><i class="fas fa-network-wired"></i></div>
+                <h3>Shortest Path Optimizer — Dhaka Road Network</h3>
+                <p>Algorithms course project modeling Dhaka's road network as a weighted graph. Implemented and benchmarked Dijkstra, Bellman-Ford, and A* for real-world routing with visualized output.</p>
+                <div class="proj-tags">
+                    <span class="proj-tag">C++</span>
+                    <span class="proj-tag">Graph Algorithms</span>
+                    <span class="proj-tag">Dijkstra</span>
+                    <span class="proj-tag">A*</span>
+                    <span class="proj-tag">Data Structures</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SKILLS LEARNED BAND -->
+        <div class="section-divider reveal"></div>
+        <div class="section-label reveal">Across All Projects</div>
+        <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:2rem;">Skills <em>developed.</em></h2>
+
+        <div class="skills-band reveal reveal-delay-2">
+            <div class="skill-cell">
+                <div class="skill-cell-title">Embedded & Hardware</div>
+                <div class="tags">
+                    <span class="tag">Arduino</span><span class="tag">ESP8266</span>
+                    <span class="tag">LoRa</span><span class="tag">Sensors</span>
+                    <span class="tag">PCB Layout</span><span class="tag">Oscilloscope</span>
+                </div>
+            </div>
+            <div class="skill-cell">
+                <div class="skill-cell-title">Programming</div>
+                <div class="tags">
+                    <span class="tag">C</span><span class="tag">C++</span>
+                    <span class="tag">Python</span><span class="tag">PHP</span>
+                    <span class="tag">JavaScript</span><span class="tag">Embedded C</span>
+                </div>
+            </div>
+            <div class="skill-cell">
+                <div class="skill-cell-title">Web & Database</div>
+                <div class="tags">
+                    <span class="tag">React</span><span class="tag">Node.js</span>
+                    <span class="tag">MySQL</span><span class="tag">MongoDB</span>
+                    <span class="tag">3NF Design</span><span class="tag">REST APIs</span>
+                </div>
+            </div>
+            <div class="skill-cell">
+                <div class="skill-cell-title">Soft Skills</div>
+                <div class="tags">
+                    <span class="tag">Team Leadership</span><span class="tag">Research</span>
+                    <span class="tag">Technical Writing</span><span class="tag">Presentation</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-wrap reveal">
+            <a href="index.html#experience" class="back-link">
+                <i class="fas fa-arrow-left fa-xs"></i> Back to Experience
             </a>
-            <ul class="nav-links">
-                <li><a href="index.html#home">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#skills">Skills</a></li>
-                <li><a href="index.html#experience">Experience</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="index.html#achievements">Achievements</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="pivolve.html">PIVOLVE</a></li>
-            </ul>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
-    </nav>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="page-header-bg"></div>
-        <div class="page-header-content" data-aos="fade-up">
-            <h1>University <span class="gradient-text">Projects</span></h1>
-            <p>Innovative projects developed during my academic journey at IUB</p>
-        </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Projects Section -->
-    <section class="section">
-        <div class="section-container">
-            <div class="section-tag" data-aos="fade-up">✦ INNOVATION LAB</div>
-            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Engineering & Robotics Projects</h2>
-            <div class="projects-grid">
-                
-                <!-- Project 1: CanSat -->
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="100">
-                    <div class="project-icon"><i class="fas fa-satellite"></i></div>
-                    <h3>CanSat Environmental Data Project</h3>
-                    <p>Team project developing a miniaturized satellite system for collecting environmental data including temperature, humidity, and air pressure using sensors and communication modules.</p>
-                    <div class="project-tech">
-                        <span>Arduino</span>
-                        <span>Sensors</span>
-                        <span>LoRa</span>
-                        <span>Embedded Systems</span>
-                    </div>
-                </div>
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <a href="index.html" class="footer-logo">TS<span>.</span></a>
+        <ul class="footer-links">
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="pivolve.html">Pivolve</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="footer-copy">© 2026 Tanjil Sarkar · IUB · Dhaka 🇧🇩</div>
+    </div>
+</footer>
 
-                <!-- Project 2: IoT Poultry Farm -->
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="150">
-                    <div class="project-icon"><i class="fas fa-tractor"></i></div>
-                    <h3>IoT Based Poultry Farm Management</h3>
-                    <p>Smart poultry farm system that monitors and controls temperature, humidity, and other environmental factors automatically to ensure optimal conditions for poultry health.</p>
-                    <div class="project-tech">
-                        <span>IoT</span>
-                        <span>Arduino</span>
-                        <span>Sensors</span>
-                        <span>NodeMCU</span>
-                    </div>
-                </div>
+<script>
+    // LOADER
+    let pct = 0;
+    const pctEl = document.getElementById('loaderPct');
+    const loader = document.getElementById('loader');
+    const iv = setInterval(() => {
+        pct = Math.min(pct + Math.random() * 20, 100);
+        pctEl.textContent = Math.floor(pct) + '%';
+        if (pct >= 100) { clearInterval(iv); setTimeout(() => loader.classList.add('gone'), 180); }
+    }, 70);
 
-                <!-- Project 3: Soccer Bot -->
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="200">
-                    <div class="project-icon"><i class="fas fa-futbol"></i></div>
-                    <h3>Soccer Bot</h3>
-                    <p>Autonomous soccer-playing robot designed for robotic competitions. Features ball detection, navigation, and kicking mechanism using computer vision and motor control.</p>
-                    <div class="project-tech">
-                        <span>Arduino</span>
-                        <span>Motor Control</span>
-                        <span>IR Sensors</span>
-                        <span>Robotics</span>
-                    </div>
-                </div>
+    // CURSOR
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx=0, my=0, rx=0, ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+    (function animCursor(){
+        cur.style.left  = (mx-5)+'px'; cur.style.top  = (my-5)+'px';
+        rx += (mx-rx-18)*0.13; ry += (my-ry-18)*0.13;
+        ring.style.left = rx+'px';     ring.style.top  = ry+'px';
+        requestAnimationFrame(animCursor);
+    })();
 
-                <!-- Project 4: Line Following Car -->
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="250">
-                    <div class="project-icon"><i class="fas fa-car"></i></div>
-                    <h3>Line Following Car</h3>
-                    <p>Autonomous vehicle that follows a predefined path using infrared sensors and PID control algorithm for smooth navigation.</p>
-                    <div class="project-tech">
-                        <span>Arduino</span>
-                        <span>IR Sensors</span>
-                        <span>PID Control</span>
-                        <span>Embedded C</span>
-                    </div>
-                </div>
+    // NAVBAR
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
 
-                <!-- Project 5: Audio Amplifier -->
-                <div class="project-card" data-aos="zoom-in-up" data-aos-delay="300">
-                    <div class="project-icon"><i class="fas fa-music"></i></div>
-                    <h3>Audio Amplifier</h3>
-                    <p>High-fidelity audio amplifier circuit designed and built from scratch using transistors and operational amplifiers for clear sound reproduction.</p>
-                    <div class="project-tech">
-                        <span>Electronics</span>
-                        <span>Circuit Design</span>
-                        <span>Transistors</span>
-                        <span>Op-Amps</span>
-                    </div>
-                </div>
+    // MOBILE MENU
+    document.getElementById('mobileToggle').addEventListener('click', () =>
+        document.getElementById('navLinks').classList.toggle('open'));
+    document.querySelectorAll('.nav-links a').forEach(a =>
+        a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
 
-            </div>
-            
-            <a href="index.html#experience" class="back-link" data-aos="fade-up">
-                <i class="fas fa-arrow-left"></i> Back to Experience
-            </a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-links">
-                <a href="index.html#home">Home</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#skills">Skills</a>
-                <a href="index.html#experience">Experience</a>
-                <a href="index.html#projects">Projects</a>
-                <a href="index.html#achievements">Achievements</a>
-                <a href="index.html#contact">Contact</a>
-                <a href="pivolve.html">PIVOLVE</a>
-            </div>
-            <div class="copyright">
-                <p>© 2026 Tanjil Sarkar — From Bangladesh with ❤️</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
+    // SCROLL REVEAL
+    const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
         });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX - 6 + 'px';
-            cursor.style.top = e.clientY - 6 + 'px';
-            cursorFollower.style.left = e.clientX - 15 + 'px';
-            cursorFollower.style.top = e.clientY - 15 + 'px';
+    // MAGNETIC RADIAL on cards
+    document.querySelectorAll('.proj-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+            card.style.setProperty('--my', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
         });
+    });
 
-        // Mobile menu
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+    // SMOOTH SCROLL
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior:'smooth' });
         });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
