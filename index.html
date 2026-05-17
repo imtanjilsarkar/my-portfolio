@@ -1471,15 +1471,20 @@
                     <a href="https://instagram.com/tanjilsarkar_" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            <form class="contact-form reveal reveal-delay-3" id="contactForm">
+            <form class="contact-form reveal reveal-delay-3" id="contactForm" action="https://formsubmit.co/im.tanjilsarkar@gmail.com" method="POST">
+                <input type="text" name="_honey" style="display:none">
+                <input type="hidden" name="_next" value="https://tanjilsarkar.me">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                
                 <div class="form-group">
-                    <input type="text" placeholder="Your name" required>
+                    <input type="text" name="name" placeholder="Your name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" placeholder="Your email" required>
+                    <input type="email" name="email" placeholder="Your email" required>
                 </div>
                 <div class="form-group">
-                    <textarea placeholder="Your message…" required></textarea>
+                    <textarea name="message" placeholder="Your message…" required></textarea>
                 </div>
                 <button type="submit" class="form-submit">Send message →</button>
             </form>
