@@ -1471,25 +1471,30 @@
                     <a href="https://instagram.com/tanjilsarkar_" class="social-btn" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
+            
             <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value="68b34299-6068-4e0d-a86d-5fa2bb877262">
-    <input type="hidden" name="_subject" value="New message from tanjilsarkar.me">
-    <input type="hidden" name="_from" value="im.tanjilsarkar@gmail.com">
-    
-    <!-- Spam prevention -->
-    <input type="checkbox" name="botcheck" style="display:none">
-    
-    <div class="form-group">
-        <input type="text" name="name" placeholder="Your name" required>
-    </div>
-    <div class="form-group">
-        <input type="email" name="email" placeholder="Your email" required>
-    </div>
-    <div class="form-group">
-        <textarea name="message" placeholder="Your message…" required></textarea>
-    </div>
-    <button type="submit" class="form-submit">Send message →</button>
-</form>
+                <input type="hidden" name="access_key" value="68b34299-6068-4e0d-a86d-5fa2bb877262">
+                <input type="hidden" name="_subject" value="New message from tanjilsarkar.me">
+                <input type="hidden" name="_from" value="im.tanjilsarkar@gmail.com">
+                <input type="hidden" name="_replyto" value="email">
+                
+                <!-- Spam prevention -->
+                <input type="checkbox" name="botcheck" style="display:none">
+                
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your message…" required></textarea>
+                </div>
+                <button type="submit" class="form-submit" id="submitBtn">
+                    <span>Send message</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
         </div>
     </div>
 </section>
